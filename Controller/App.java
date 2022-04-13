@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.Date;
 
 public class App {
     public static void main(String[] args){
@@ -11,8 +12,7 @@ public class App {
         int choixEcran = scanner.nextInt();
         System.out.println("Vous avez choisi l'écran: " + choixEcran);*/
 
-        Person director = new Person("Armand", "DEFFRENNES", 21);
-        PersonPrinter print = new PersonPrinter(director);
-        print.print();
+        OrderManager orderManager = new OrderManager();
+        orderManager.askForMenu();
     }
 }
