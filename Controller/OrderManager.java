@@ -20,7 +20,7 @@ public class OrderManager {
     public void addOrder(Order order){
         this.DayOrderList.add(order);
     }
-    public void askForMenu(){
+    public void askForOrder(){
         //Création de la commande
         System.out.format("Est-ce que vous prendrez :\n1: menu spécial\n2: menu classique ?\n");
         int menuChoice = this.scanner.nextInt();
@@ -44,7 +44,10 @@ public class OrderManager {
         }while(choice != -1);
         System.out.println("Merci pour vos choix " + this.drinkOrder + " " + this.foodOrder);
     }
+    public void askForMenu(){
+        System.out.println("Quel type de menu souhaitez-vous ?");
 
+    }
     public void askForFood(){
         System.out.format("Que voulez-vous comme plat(s) ? (-1 pour quitter)\n");
         this.foodMenu.printMenu();
