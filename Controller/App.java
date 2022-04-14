@@ -25,6 +25,9 @@ public class App {
         List<Meal>drinkList = createDrinkList();
         ClassicMenu classicMenu = new ClassicMenu(foodList, drinkList, true, -1);
         HundredYearsMenu hundredYearsMenu = new HundredYearsMenu(foodList, drinkList, true);
+        /*Orders*/
+        OrderManager orderManager = new OrderManager(classicMenu, hundredYearsMenu);
+        orderManager.askForOrder();
     }
     public static List<Meal> createFoodList(){
         List<Meal>menu = new ArrayList<>();

@@ -3,63 +3,121 @@ import java.util.List;
 import java.util.Scanner;
 
 public class OrderManager {
-    private List<Order>DayOrderList;
-    private FoodMenu foodMenu;
-    private DrinkMenu drinkMenu;
+    private List<Order>dayOrderList;
     private Scanner scanner;
-    private String foodOrder;
-    private String drinkOrder;
+    //New
+    private ClassicMenu classicMenu;
+    private HundredYearsMenu hundredYearsMenu;
     OrderManager(){
-        this.DayOrderList = new ArrayList<>();
-        this.foodMenu = new FoodMenu();
-        this.drinkMenu = new DrinkMenu();
+        this.dayOrderList = new ArrayList<>();
         this.scanner = new Scanner(System.in);
-        this.foodOrder="";
-        this.drinkOrder ="";
+        this.classicMenu = new ClassicMenu();
+        this.hundredYearsMenu = new HundredYearsMenu();
+    }
+    OrderManager(ClassicMenu classicMenu, HundredYearsMenu hundredYearsMenu){
+        this.dayOrderList = new ArrayList<>();
+        this.scanner = new Scanner(System.in);
+        this.classicMenu = classicMenu;
+        this.hundredYearsMenu = hundredYearsMenu;
+    }
+    public ClassicMenu getClassicMenu() {
+        return classicMenu;
+    }
+    public HundredYearsMenu getHundredYearsMenu() {
+        return hundredYearsMenu;
+    }
+    public List<Order> getDayOrderList() {
+        return dayOrderList;
+    }
+    public Scanner getScanner() {
+        return scanner;
+    }
+    public void setDayOrderList(List<Order> dayOrderList) {
+        this.dayOrderList = dayOrderList;
     }
     public void addOrder(Order order){
-        this.DayOrderList.add(order);
+        this.dayOrderList.add(order);
     }
     public void askForOrder(){
         //Création de la commande
-        System.out.format("Est-ce que vous prendrez :\n1: menu spécial\n2: menu classique ?\n");
+        Order currentOrder = new Order();
+        currentOrder.setIdOrder(this.dayOrderList.size());
+        //Demande menu
+        this.askForMenu();
         int menuChoice = this.scanner.nextInt();
+        if (menuChoice == 1){
+            currentOrder.setItASpecialOne(false);
+        }
+        else if (menuChoice == 2){
+            currentOrder.setItASpecialOne(true);
+        }
+        else{
+            System.out.println("Erreur");
+            return;
+        }
+
+        //Demande food
         int choice = 0;//Default
+        List<Meal>foodOrder = new ArrayList<>();
         do {
             this.askForFood();
             choice = this.scanner.nextInt();
             if (choice != -1){
-                this.foodOrder += choice;
+                Meal askedMeal = this.classicMenu.getFoodMenuItem(choice - 1);
+                foodOrder.add(askedMeal);
             }
-            this.printFoodOrder();
+            this.printFoodOrder(foodOrder);
         }while(choice != -1);
+        currentOrder.setFoodOrder(foodOrder);
+
         System.out.println("On passe maintenant aux plats");
+
+        //demande drink
+        choice = 0;//Default
+        List<Meal>drinkOrder = new ArrayList<>();
         do {
             this.askForDrink();
             choice = this.scanner.nextInt();
             if (choice != -1){
-                this.drinkOrder += choice + " ";
+                Meal askedMeal = this.classicMenu.getDrinkMenuItem(choice - 1);
+                drinkOrder.add(askedMeal);
             }
-            this.printDrinkOrder();
+            this.printDrinkOrder(drinkOrder);
         }while(choice != -1);
-        System.out.println("Merci pour vos choix " + this.drinkOrder + " " + this.foodOrder);
+        currentOrder.setDrinkOrder(drinkOrder);
+
+        System.out.print("Merci pour vos choix:\n");
+        this.printFoodOrder(foodOrder);
+        this.printDrinkOrder(drinkOrder);
+        System.out.print(".\n");
     }
     public void askForMenu(){
-        System.out.println("Quel type de menu souhaitez-vous ?");
-
+        System.out.println("Quel type de menu souhaitez-vous ?\n1:Menu classique\n2: Menu 100 ans");
     }
     public void askForFood(){
         System.out.format("Que voulez-vous comme plat(s) ? (-1 pour quitter)\n");
-        this.foodMenu.printMenu();
+        this.classicMenu.printOneMenuType(this.classicMenu.getFoodMenu());
     }
-    public void printFoodOrder(){
-        System.out.println("Les plats choisis sont : " + this.foodOrder);
-    }
+
     public void askForDrink(){
         System.out.format("Que voulez-vous comme boisson(s) ? (-1 pour quitter)\n");
-        this.drinkMenu.printMenu();
+        this.classicMenu.printOneMenuType(this.classicMenu.getDrinkMenu());
     }
-    public void printDrinkOrder(){
-        System.out.println("Les boissons choisies sont : " + this.drinkOrder);
+    /*TODO
+    rendre les 2 fonctions suivantes en 1
+     */
+    public void printFoodOrder(List<Meal>foodOrder){
+        System.out.print("Choix:");
+        for (Meal meal:foodOrder){
+            System.out.print(" / " + meal.getName());
+        }
+        System.out.print(".\n");
+    }
+    public void printDrinkOrder(List<Meal>drinkOrder){
+        System.out.print("Choix:");
+        for (Meal meal:drinkOrder){
+            System.out.print(" " + meal.getName());
+        }
+        System.out.print(".\n");
     }
 }

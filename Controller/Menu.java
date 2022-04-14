@@ -51,9 +51,9 @@ public class Menu {
     public int getMenuPrice() {
         return menuPrice;
     }
-    public void printOneMenu(List<Meal>Menu){
+    public void printOneMenuType(List<Meal>menu){
         int i = 1;
-        for (Meal meal : Menu) {
+        for (Meal meal : menu) {
             System.out.print(i + ": " + meal.getName() + ", composition: ");
             for (INGREDIENT_LIST ingredient : meal.getRecipe()){
                 System.out.print(ingredient.toString() + " ");
