@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/*TODO
+* Gérer les menus spéciaux (on gère uniquement les menus classiques à ce stade)
+* */
+
 public class OrderManager {
     private List<Order>dayOrderList;
     private Scanner scanner;
@@ -66,13 +70,13 @@ public class OrderManager {
                 Meal askedMeal = this.classicMenu.getFoodMenuItem(choice - 1);
                 foodOrder.add(askedMeal);
             }
-            this.printFoodOrder(foodOrder);
+            this.printOrder(foodOrder);
         }while(choice != -1);
         currentOrder.setFoodOrder(foodOrder);
 
         System.out.println("On passe maintenant aux plats");
 
-        //demande drink
+        //Demande drink
         choice = 0;//Default
         List<Meal>drinkOrder = new ArrayList<>();
         do {
@@ -82,14 +86,27 @@ public class OrderManager {
                 Meal askedMeal = this.classicMenu.getDrinkMenuItem(choice - 1);
                 drinkOrder.add(askedMeal);
             }
-            this.printDrinkOrder(drinkOrder);
+            this.printOrder(drinkOrder);
         }while(choice != -1);
         currentOrder.setDrinkOrder(drinkOrder);
 
-        System.out.print("Merci pour vos choix:\n");
-        this.printFoodOrder(foodOrder);
-        this.printDrinkOrder(drinkOrder);
-        System.out.print(".\n");
+        this.dayOrderList.add(currentOrder);
+
+        System.out.print("Merci pour vos choix !\n");
+    }
+    public void prepareOrder(){
+        for (int i = 0; i < this.dayOrderList.size(); i++){
+            if (!this.dayOrderList.get(i).isServed()){
+                //Make the bill
+                this.dayOrderList.get(i).makeInvoice();
+                //interact with stocks
+                /*TODO
+
+                 */
+                //End of treatment
+                this.dayOrderList.get(i).setServed(true);
+            }
+        }
     }
     public void askForMenu(){
         System.out.println("Quel type de menu souhaitez-vous ?\n1:Menu classique\n2: Menu 100 ans");
@@ -103,20 +120,11 @@ public class OrderManager {
         System.out.format("Que voulez-vous comme boisson(s) ? (-1 pour quitter)\n");
         this.classicMenu.printOneMenuType(this.classicMenu.getDrinkMenu());
     }
-    /*TODO
-    rendre les 2 fonctions suivantes en 1
-     */
-    public void printFoodOrder(List<Meal>foodOrder){
+
+    public void printOrder(List<Meal>order){
         System.out.print("Choix:");
-        for (Meal meal:foodOrder){
+        for (Meal meal:order){
             System.out.print(" / " + meal.getName());
-        }
-        System.out.print(".\n");
-    }
-    public void printDrinkOrder(List<Meal>drinkOrder){
-        System.out.print("Choix:");
-        for (Meal meal:drinkOrder){
-            System.out.print(" " + meal.getName());
         }
         System.out.print(".\n");
     }

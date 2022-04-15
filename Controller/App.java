@@ -28,6 +28,8 @@ public class App {
         /*Orders*/
         OrderManager orderManager = new OrderManager(classicMenu, hundredYearsMenu);
         orderManager.askForOrder();
+        orderManager.prepareOrder();
+        orderManager.getDayOrderList().get(0).printInvoice();
     }
     public static List<Meal> createFoodList(){
         List<Meal>menu = new ArrayList<>();

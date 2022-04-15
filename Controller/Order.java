@@ -7,12 +7,16 @@ public class Order {
     private List<Meal>foodOrder;
     private List<Meal>drinkOrder;
     private boolean isItASpecialOne;
+    private boolean isServed;
+    private Invoice orderInvoice;
     Order(){
         this.idOrder = 0;
         this.orderType = INGREDIENT_TYPE.BOTH;
         this.foodOrder = new ArrayList<>();
         this.drinkOrder = new ArrayList<>();
         this.isItASpecialOne = false;
+        this.isServed = false;
+        this.orderInvoice = new Invoice();
     }
 
     Order(int idOrder, INGREDIENT_TYPE orderType, List<Meal>foodOrder, List<Meal>drinkOrder, boolean isItASpecialOne){
@@ -20,6 +24,8 @@ public class Order {
         this.foodOrder = foodOrder;
         this.drinkOrder = drinkOrder;
         this.isItASpecialOne = isItASpecialOne;
+        this.isServed = false;
+        this.orderInvoice = new Invoice();
     }
 
     public void setDrinkOrder(List<Meal> drinkOrder) {
@@ -42,6 +48,45 @@ public class Order {
         this.orderType = orderType;
     }
 
+    public void setOrderInvoice(Invoice orderInvoice) {
+        this.orderInvoice = orderInvoice;
+    }
+
+    public void setServed(boolean served) {
+        isServed = served;
+    }
+
+    public Invoice getOrderInvoice() {
+        return orderInvoice;
+    }
+
+    public boolean isServed() {
+        return isServed;
+    }
+
+    public List<Meal> getDrinkOrder() {
+        return drinkOrder;
+    }
+
+    public List<Meal> getFoodOrder() {
+        return foodOrder;
+    }
+    public void makeInvoice(){
+        //Make the bill
+        String billString = "Food: ";
+        int billInt = 0;
+        for(Meal foodToPay: this.foodOrder){
+            billString += foodToPay.getName() + "/";
+            billInt += foodToPay.getPrice();
+        }
+        billString += "\nDrink: ";
+        for (Meal drinkToPay: this.drinkOrder){
+            billString += drinkToPay.getName() + "/";
+            billInt += drinkToPay.getPrice();
+        }
+        this.orderInvoice.setAmount(billInt);
+        this.orderInvoice.setDetails(billString);
+    }
     public void printOneOrderType(List<Meal>order){
         System.out.print("Vous avez commandé: ");
         for (int i = 0; i < order.size(); i++) {
@@ -53,5 +98,8 @@ public class Order {
             }
         }
         System.out.print("\n");
+    }
+    public void printInvoice(){
+        System.out.println(this.orderInvoice.getDetails() + "\nTotal: " + this.orderInvoice.getAmount());
     }
 }
