@@ -71,10 +71,10 @@ public class OrderManager {
                 foodOrder.add(askedMeal);
             }
             this.printOrder(foodOrder);
-        }while(choice != -1);
+        }while((currentOrder.isItASpecialOne() &&  foodOrder.size() < 7) || (choice != -1 && !currentOrder.isItASpecialOne()));
         currentOrder.setFoodOrder(foodOrder);
 
-        System.out.println("On passe maintenant aux plats");
+        System.out.println("On passe maintenant aux boissons");
 
         //Demande drink
         choice = 0;//Default
@@ -87,7 +87,7 @@ public class OrderManager {
                 drinkOrder.add(askedMeal);
             }
             this.printOrder(drinkOrder);
-        }while(choice != -1);
+        }while((choice != -1 && !currentOrder.isItASpecialOne()) || (currentOrder.isItASpecialOne() &&  drinkOrder.size() < 7));
         currentOrder.setDrinkOrder(drinkOrder);
 
         this.dayOrderList.add(currentOrder);
@@ -109,7 +109,7 @@ public class OrderManager {
         }
     }
     public void askForMenu(){
-        System.out.println("Quel type de menu souhaitez-vous ?\n1:Menu classique\n2: Menu 100 ans");
+        System.out.println("Quel type de menu souhaitez-vous ?\n1: Menu classique\n2: Menu 100 ans");
     }
     public void askForFood(){
         System.out.format("Que voulez-vous comme plat(s) ? (-1 pour quitter)\n");

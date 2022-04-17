@@ -71,6 +71,11 @@ public class Order {
     public List<Meal> getFoodOrder() {
         return foodOrder;
     }
+
+    public boolean isItASpecialOne() {
+        return isItASpecialOne;
+    }
+
     public void makeInvoice(){
         //Make the bill
         String billString = "Food: ";
@@ -86,6 +91,9 @@ public class Order {
         }
         this.orderInvoice.setAmount(billInt);
         this.orderInvoice.setDetails(billString);
+        if (this.isItASpecialOne){
+            this.orderInvoice.setAmount(100);
+        }
     }
     public void printOneOrderType(List<Meal>order){
         System.out.print("Vous avez commandé: ");
