@@ -3,10 +3,13 @@ import java.util.List;
 
 public class Order {
     private int idOrder;
+    /*TODO
+    Make orderType
+     */
     private INGREDIENT_TYPE orderType;
     private List<Meal>foodOrder;
     private List<Meal>drinkOrder;
-    private boolean isItASpecialOne;
+    private MENU_EDITION menuEdition;
     private boolean isServed;
     private Invoice orderInvoice;
     Order(){
@@ -14,16 +17,16 @@ public class Order {
         this.orderType = INGREDIENT_TYPE.BOTH;
         this.foodOrder = new ArrayList<>();
         this.drinkOrder = new ArrayList<>();
-        this.isItASpecialOne = false;
+        this.menuEdition = MENU_EDITION.CLASSIQUE;
         this.isServed = false;
         this.orderInvoice = new Invoice();
     }
 
-    Order(int idOrder, INGREDIENT_TYPE orderType, List<Meal>foodOrder, List<Meal>drinkOrder, boolean isItASpecialOne){
+    Order(int idOrder, INGREDIENT_TYPE orderType, List<Meal>foodOrder, List<Meal>drinkOrder, MENU_EDITION menuEdition){
         this.orderType = orderType;
         this.foodOrder = foodOrder;
         this.drinkOrder = drinkOrder;
-        this.isItASpecialOne = isItASpecialOne;
+        this.menuEdition = menuEdition;
         this.isServed = false;
         this.orderInvoice = new Invoice();
     }
@@ -40,8 +43,8 @@ public class Order {
         this.foodOrder = foodOrder;
     }
 
-    public void setItASpecialOne(boolean itASpecialOne) {
-        isItASpecialOne = itASpecialOne;
+    public void setMenuEdition(MENU_EDITION menuEdition) {
+        this.menuEdition = menuEdition;
     }
 
     public void setOrderType(INGREDIENT_TYPE orderType) {
@@ -54,6 +57,10 @@ public class Order {
 
     public void setServed(boolean served) {
         isServed = served;
+    }
+
+    public int getIdOrder() {
+        return idOrder;
     }
 
     public Invoice getOrderInvoice() {
@@ -72,28 +79,13 @@ public class Order {
         return foodOrder;
     }
 
-    public boolean isItASpecialOne() {
-        return isItASpecialOne;
+    public MENU_EDITION getMenuEdition() {
+        return this.menuEdition;
     }
 
     public void makeInvoice(){
-        //Make the bill
-        String billString = "Food: ";
-        int billInt = 0;
-        for(Meal foodToPay: this.foodOrder){
-            billString += foodToPay.getName() + "/";
-            billInt += foodToPay.getPrice();
-        }
-        billString += "\nDrink: ";
-        for (Meal drinkToPay: this.drinkOrder){
-            billString += drinkToPay.getName() + "/";
-            billInt += drinkToPay.getPrice();
-        }
-        this.orderInvoice.setAmount(billInt);
-        this.orderInvoice.setDetails(billString);
-        if (this.isItASpecialOne){
-            this.orderInvoice.setAmount(100);
-        }
+        this.orderInvoice.createInvoiceDetails(this.foodOrder, this.drinkOrder, this.menuEdition);
+        this.orderInvoice.createInvoiceFile(this.idOrder);
     }
     public void printOneOrderType(List<Meal>order){
         System.out.print("Vous avez commandé: ");
@@ -106,8 +98,5 @@ public class Order {
             }
         }
         System.out.print("\n");
-    }
-    public void printInvoice(){
-        System.out.println(this.orderInvoice.getDetails() + "\nTotal: " + this.orderInvoice.getAmount());
     }
 }

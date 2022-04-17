@@ -9,17 +9,20 @@ public class Menu {
     private List<Meal> drinkMenu;
     private boolean isAvailable;
     private int menuPrice;
+    private MENU_EDITION name;
     Menu(){
       this.foodMenu = new ArrayList<Meal>();
       this.drinkMenu = new ArrayList<Meal>();
       this.isAvailable = false;
       this.menuPrice = -1;//Default
+        this.name = MENU_EDITION.CLASSIQUE;
     }
-    Menu(List<Meal>foodMenu, List<Meal>drinkMenu, boolean isAvailable, int menuPrice){
+    Menu(List<Meal>foodMenu, List<Meal>drinkMenu, boolean isAvailable, int menuPrice, MENU_EDITION name){
         this.foodMenu = foodMenu;
         this.drinkMenu = drinkMenu;
         this.isAvailable = isAvailable;
         this.menuPrice = menuPrice;
+        this.name = name;
     }
     void addFoodMenuItem(Meal meal){
         this.foodMenu.add(meal);
@@ -45,6 +48,11 @@ public class Menu {
     public List<Meal> getFoodMenu() {
         return foodMenu;
     }
+
+    public MENU_EDITION getName() {
+        return name;
+    }
+
     public boolean getIsAvailable(){
         return this.isAvailable;
     }

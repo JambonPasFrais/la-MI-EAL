@@ -23,13 +23,13 @@ public class App {
         /*Menu Creation*/
         List<Meal>foodList = createFoodList();
         List<Meal>drinkList = createDrinkList();
-        ClassicMenu classicMenu = new ClassicMenu(foodList, drinkList, true, -1);
-        HundredYearsMenu hundredYearsMenu = new HundredYearsMenu(foodList, drinkList, true);
+        ClassicMenu classicMenu = new ClassicMenu(foodList, drinkList, true, -1, MENU_EDITION.CLASSIQUE);
+        HundredYearsMenu hundredYearsMenu = new HundredYearsMenu(foodList, drinkList, true, MENU_EDITION.CENT_ANS);
         /*Orders*/
         OrderManager orderManager = new OrderManager(classicMenu, hundredYearsMenu);
         orderManager.askForOrder();
         orderManager.prepareOrder();
-        orderManager.getDayOrderList().get(0).printInvoice();
+        orderManager.getDayOrderList().get(0).getOrderInvoice().printInvoice();
     }
     public static List<Meal> createFoodList(){
         List<Meal>menu = new ArrayList<>();

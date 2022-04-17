@@ -3,7 +3,8 @@ import java.util.List;
 import java.util.Scanner;
 
 /*TODO
-* Gérer les menus spéciaux (on gère uniquement les menus classiques à ce stade)
+* Gérer les Scanner de manière rnadom (on ne doit pas interagir du point de vue client)
+* Factures dans les fichiers (créer un fichier par facture)
 * */
 
 public class OrderManager {
@@ -50,16 +51,16 @@ public class OrderManager {
         this.askForMenu();
         int menuChoice = this.scanner.nextInt();
         if (menuChoice == 1){
-            currentOrder.setItASpecialOne(false);
+            currentOrder.setMenuEdition(MENU_EDITION.CLASSIQUE);
         }
         else if (menuChoice == 2){
-            currentOrder.setItASpecialOne(true);
+            currentOrder.setMenuEdition(MENU_EDITION.CENT_ANS);
         }
         else{
             System.out.println("Erreur");
             return;
         }
-
+        System.out.println(currentOrder.getMenuEdition() + " " + this.hundredYearsMenu.getName());
         //Demande food
         int choice = 0;//Default
         List<Meal>foodOrder = new ArrayList<>();
@@ -71,7 +72,7 @@ public class OrderManager {
                 foodOrder.add(askedMeal);
             }
             this.printOrder(foodOrder);
-        }while((currentOrder.isItASpecialOne() &&  foodOrder.size() < 7) || (choice != -1 && !currentOrder.isItASpecialOne()));
+        }while((currentOrder.getMenuEdition() == this.hundredYearsMenu.getName() &&  foodOrder.size() < this.hundredYearsMenu.getMaximumFoodQuantity()) || (choice != -1 && currentOrder.getMenuEdition()== this.classicMenu.getName()));
         currentOrder.setFoodOrder(foodOrder);
 
         System.out.println("On passe maintenant aux boissons");
@@ -87,7 +88,7 @@ public class OrderManager {
                 drinkOrder.add(askedMeal);
             }
             this.printOrder(drinkOrder);
-        }while((choice != -1 && !currentOrder.isItASpecialOne()) || (currentOrder.isItASpecialOne() &&  drinkOrder.size() < 7));
+        }while((currentOrder.getMenuEdition() == this.hundredYearsMenu.getName() &&  drinkOrder.size() < this.hundredYearsMenu.getMaximumDrinkQuantity()) || (choice != -1 && currentOrder.getMenuEdition() == this.classicMenu.getName()));
         currentOrder.setDrinkOrder(drinkOrder);
 
         this.dayOrderList.add(currentOrder);
@@ -109,7 +110,7 @@ public class OrderManager {
         }
     }
     public void askForMenu(){
-        System.out.println("Quel type de menu souhaitez-vous ?\n1: Menu classique\n2: Menu 100 ans");
+        System.out.println("Quel type de menu souhaitez-vous ?\n1: Menu " + MENU_EDITION.CLASSIQUE.toString() + "\n2: Menu " + MENU_EDITION.CENT_ANS.toString());
     }
     public void askForFood(){
         System.out.format("Que voulez-vous comme plat(s) ? (-1 pour quitter)\n");
@@ -122,7 +123,7 @@ public class OrderManager {
     }
 
     public void printOrder(List<Meal>order){
-        System.out.print("Choix:");
+        System.out.print("Choix: ");
         for (Meal meal:order){
             System.out.print(" / " + meal.getName());
         }
