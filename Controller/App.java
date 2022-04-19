@@ -14,11 +14,13 @@ public class App {
         /*TODO
         Manage orders to interact width stocks & meal preparation
          */
-        /*OrderManager orderManager = new OrderManager();
-        orderManager.askForOrder();*/
-        /*TODO
-        Implement the different types of menu
-         */
+
+        /*Stock Creation*/
+        Map<INGREDIENT_LIST, Ingredient> stockMap = createStock();
+        Stock firstStock = new Stock(stockMap);
+        StockManager stockManager = new StockManager();
+        stockManager.setDailyStock(firstStock);
+        stockManager.getDailyStock().printStock();
 
         /*Menu Creation*/
         List<Meal>foodList = createFoodList();
@@ -26,10 +28,9 @@ public class App {
         ClassicMenu classicMenu = new ClassicMenu(foodList, drinkList, true, -1, MENU_EDITION.CLASSIQUE);
         HundredYearsMenu hundredYearsMenu = new HundredYearsMenu(foodList, drinkList, true, MENU_EDITION.CENT_ANS);
         /*Orders*/
-        OrderManager orderManager = new OrderManager(classicMenu, hundredYearsMenu);
+        /*OrderManager orderManager = new OrderManager(classicMenu, hundredYearsMenu);
         orderManager.askForOrder();
-        orderManager.prepareOrder();
-        orderManager.getDayOrderList().get(0).getOrderInvoice().printInvoice();
+        orderManager.prepareOrder();*/
     }
     public static List<Meal> createFoodList(){
         List<Meal>menu = new ArrayList<>();
@@ -56,5 +57,21 @@ public class App {
         menu.add(new Meal(3, "Jus de fruit", new INGREDIENT_LIST[]{INGREDIENT_LIST.JUICE}, false, 1, MEAL_TYPE.OMNIVOROUS, 1));
         menu.add(new Meal(4, "Verre d'eau", new INGREDIENT_LIST[]{INGREDIENT_LIST.WATER}, false, 1, MEAL_TYPE.OMNIVOROUS, 0));
         return menu;
+    }
+
+    public static Map<INGREDIENT_LIST, Ingredient> createStock(){
+        Map<INGREDIENT_LIST, Ingredient> stock = new HashMap<INGREDIENT_LIST, Ingredient>();
+        INGREDIENT_LIST [] allIngredientName = {INGREDIENT_LIST.SALAD, INGREDIENT_LIST.TOMATO, INGREDIENT_LIST.ONION, INGREDIENT_LIST.MUSHROOM, INGREDIENT_LIST.BURGER_BREAD, INGREDIENT_LIST.STEAK, INGREDIENT_LIST.PIZZA_DOUGH, INGREDIENT_LIST.CHEESE, INGREDIENT_LIST.SAUSAGE, INGREDIENT_LIST.RICE, INGREDIENT_LIST.CHICKEN, INGREDIENT_LIST.PANCAKE, INGREDIENT_LIST.LIMONADE, INGREDIENT_LIST.CIDER, INGREDIENT_LIST.BEER, INGREDIENT_LIST.JUICE, INGREDIENT_LIST.WATER};
+        for (int i = 0; i < allIngredientName.length; i++){
+            Ingredient ingredient;
+            if (allIngredientName[i] == INGREDIENT_LIST.LIMONADE || allIngredientName[i] == INGREDIENT_LIST.CIDER || allIngredientName[i] == INGREDIENT_LIST.BEER || allIngredientName[i] == INGREDIENT_LIST.JUICE || allIngredientName[i] == INGREDIENT_LIST.WATER){
+                ingredient = new Ingredient(INGREDIENT_TYPE.DRINK, allIngredientName[i], -1);
+            }
+            else {
+                ingredient = new Ingredient(INGREDIENT_TYPE.FOOD, allIngredientName[i], 5);
+            }
+            stock.put(allIngredientName[i], ingredient);
+        }
+        return stock;
     }
 }
