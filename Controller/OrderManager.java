@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /*TODO
-* Gérer les Scanner de manière rnadom (on ne doit pas interagir du point de vue client)
-* Factures dans les fichiers (créer un fichier par facture)
+* Passer au RANDOM
 * */
 
 public class OrderManager {
@@ -43,6 +43,59 @@ public class OrderManager {
     public void addOrder(Order order){
         this.dayOrderList.add(order);
     }
+    public void generateOrder(){
+        //Var
+        Random r = new Random();
+        int choice, max, min = 0, foodMenuSize, drinkMenuSize;
+        List<Meal>foodOrder = new ArrayList<>();
+        List<Meal>drinkOrder = new ArrayList<>();
+
+        //Création de la commande
+        Order currentOrder = new Order();
+        currentOrder.setIdOrder(this.dayOrderList.size());
+
+        //Menu choice
+        max = 1;
+        choice = r.nextInt((max - min) + 1) + min;
+        if (choice == 0){
+            currentOrder.setMenuEdition(MENU_EDITION.CLASSIQUE);
+
+            max = 7; min = 1;
+            foodMenuSize = r.nextInt((max - min) + 1) + min;
+
+            min = foodMenuSize;max = (int) (foodMenuSize + Math.round(0.5 * foodMenuSize));
+            drinkMenuSize = r.nextInt((max - min) + 1) + min;
+        }
+        else {
+            currentOrder.setMenuEdition(MENU_EDITION.CENT_ANS);
+            foodMenuSize = this.hundredYearsMenu.getMaximumFoodQuantity();
+            drinkMenuSize = this.hundredYearsMenu.getMaximumDrinkQuantity();
+        }
+        System.out.println("Menu edition : " + currentOrder.getMenuEdition() + "\nFood Menu Size: " + foodMenuSize + "\nDrink Menu Size: " + drinkMenuSize);
+
+        //Food Menu Choice
+        for (int i = 0; i < foodMenuSize; i++){
+            choice = r.nextInt(this.classicMenu.getFoodMenu().size());//0 to size-1 included;
+            //We have to create a new variable each time otherwise if we modify the classicMenu it will modify every order !! (Object things)
+            Meal askedMeal = this.classicMenu.getFoodMenuItem(choice);
+            foodOrder.add(askedMeal);
+        }
+        currentOrder.setFoodOrder(foodOrder);
+        currentOrder.printOneOrderType(currentOrder.getFoodOrder());
+
+        //Drink menu Choice
+        for (int i = 0; i < drinkMenuSize; i++){
+            choice = r.nextInt(this.classicMenu.getDrinkMenu().size());//0 to size-1 included;
+            //We have to create a new variable each time otherwise if we modify the classicMenu it will modify every order !! (Object things)
+            Meal askedMeal = this.classicMenu.getDrinkMenuItem(choice);
+            drinkOrder.add(askedMeal);
+        }
+        currentOrder.setDrinkOrder(drinkOrder);
+        currentOrder.printOneOrderType(currentOrder.getDrinkOrder());
+
+        //Order generated
+        this.dayOrderList.add(currentOrder);
+    }
     public void askForOrder(){
         //Création de la commande
         Order currentOrder = new Order();
@@ -60,7 +113,6 @@ public class OrderManager {
             System.out.println("Erreur");
             return;
         }
-        System.out.println(currentOrder.getMenuEdition() + " " + this.hundredYearsMenu.getName());
         //Demande food
         int choice = 0;//Default
         List<Meal>foodOrder = new ArrayList<>();

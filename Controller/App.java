@@ -16,11 +16,11 @@ public class App {
          */
 
         /*Stock Creation*/
-        Map<INGREDIENT_LIST, Ingredient> stockMap = createStock();
+        /*Map<INGREDIENT_LIST, Ingredient> stockMap = createStock();
         Stock firstStock = new Stock(stockMap);
         StockManager stockManager = new StockManager();
         stockManager.setDailyStock(firstStock);
-        stockManager.getDailyStock().printStock();
+        stockManager.getDailyStock().printStock();*/
 
         /*Menu Creation*/
         List<Meal>foodList = createFoodList();
@@ -28,9 +28,10 @@ public class App {
         ClassicMenu classicMenu = new ClassicMenu(foodList, drinkList, true, -1, MENU_EDITION.CLASSIQUE);
         HundredYearsMenu hundredYearsMenu = new HundredYearsMenu(foodList, drinkList, true, MENU_EDITION.CENT_ANS);
         /*Orders*/
-        /*OrderManager orderManager = new OrderManager(classicMenu, hundredYearsMenu);
-        orderManager.askForOrder();
-        orderManager.prepareOrder();*/
+        OrderManager orderManager = new OrderManager(classicMenu, hundredYearsMenu);
+        for (int i = 0; i < 3; i++){
+            orderManager.generateOrder();
+        }
     }
     public static List<Meal> createFoodList(){
         List<Meal>menu = new ArrayList<>();
