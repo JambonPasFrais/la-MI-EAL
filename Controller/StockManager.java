@@ -5,8 +5,10 @@ import java.util.Map;
 
 public class StockManager {
     private Stock dailyStock;
+    private Map<INGREDIENT_LIST, Integer>shoppingList;
     StockManager(){
         this.dailyStock = new Stock();
+        this.shoppingList = new HashMap<>();
     }
 
     public void setDailyStock(Stock dailyStock) {
@@ -54,5 +56,19 @@ public class StockManager {
     }
     public void useIngredients(Meal anyTypeMeal){
 
+    }
+    /*TODO
+    TESTER les 2 fonctions ci-dessous c:
+     */
+    public void generateShoppingList(){
+        this.shoppingList = new HashMap<>();
+        this.dailyStock.getStock().forEach((key, value) -> {
+            this.shoppingList.put(key, 150 - value.getNbIngredientsLefts());
+        });
+    }
+    public void reconstituateDailyStock(){
+        this.dailyStock.getStock().forEach((key, value) -> {
+            this.dailyStock.getStock().get(key).setNbIngredientsLefts(this.shoppingList.get(key) + this.dailyStock.getStock().get(key).getNbIngredientsLefts());
+        });
     }
 }

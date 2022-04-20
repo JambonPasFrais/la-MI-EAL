@@ -27,11 +27,51 @@ public class App {
         List<Meal>drinkList = createDrinkList();
         ClassicMenu classicMenu = new ClassicMenu(foodList, drinkList, true, -1, MENU_EDITION.CLASSIQUE);
         HundredYearsMenu hundredYearsMenu = new HundredYearsMenu(foodList, drinkList, true, MENU_EDITION.CENT_ANS);
+        /*Time Creation*/
+        Time gameInternalClock = new Time();//MON 12:00
+
+        /*Manager*/
+        Scanner scanner = new Scanner(System.in);
+        int managerChoice = 0;
+
+        /*Randomness*/
+        Random r = new Random();
+
         /*Orders*/
         OrderManager orderManager = new OrderManager(classicMenu, hundredYearsMenu);
-        for (int i = 0; i < 3; i++){
-            orderManager.generateOrder();
+        int nbOrderAtTheSameTime;
+
+        /*App Manager*/
+        while (managerChoice != -1){
+            //Reconstitution des Stocks
+
+            //Management des employés de la journée
+
+            //Ouverture restaurant
+            while (gameInternalClock.getHours() <= 23 || (gameInternalClock.getHours() <= 23 && gameInternalClock.getMinutes() !=30)){
+                //Horaires de fermetures
+                if (gameInternalClock.getHours() >= 18 || gameInternalClock.getHours() <= 15){
+                    nbOrderAtTheSameTime = r.nextInt(3);
+                    for (int i = 0; i < nbOrderAtTheSameTime; i++){
+                        orderManager.generateOrder();
+                    }
+                }
+                gameInternalClock.makeCycleForRestaurantOrder();
+                gameInternalClock.printTime();
+            }
+            //Nettoyage restaurant
+
+            //Créer la liste de course
+
+            //Monitoring
+
+            //Fin journée
+            gameInternalClock.endDay();
+
+            managerChoice = scanner.nextInt();//pause
         }
+
+
     }
     public static List<Meal> createFoodList(){
         List<Meal>menu = new ArrayList<>();
@@ -69,7 +109,7 @@ public class App {
                 ingredient = new Ingredient(INGREDIENT_TYPE.DRINK, allIngredientName[i], -1);
             }
             else {
-                ingredient = new Ingredient(INGREDIENT_TYPE.FOOD, allIngredientName[i], 5);
+                ingredient = new Ingredient(INGREDIENT_TYPE.FOOD, allIngredientName[i], 150);
             }
             stock.put(allIngredientName[i], ingredient);
         }

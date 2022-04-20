@@ -71,7 +71,7 @@ public class OrderManager {
             foodMenuSize = this.hundredYearsMenu.getMaximumFoodQuantity();
             drinkMenuSize = this.hundredYearsMenu.getMaximumDrinkQuantity();
         }
-        System.out.println("Menu edition : " + currentOrder.getMenuEdition() + "\nFood Menu Size: " + foodMenuSize + "\nDrink Menu Size: " + drinkMenuSize);
+        System.out.println("Menu edition : " + currentOrder.getMenuEdition());
 
         //Food Menu Choice
         for (int i = 0; i < foodMenuSize; i++){
