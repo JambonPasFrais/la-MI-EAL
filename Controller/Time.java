@@ -63,9 +63,18 @@ public class Time {
         this.minutes += (20 * nbOfCycle);
         this.manageTime();
     }
-    public void endDay(){
-        this.day = (this.day + 1) % 7;
-        this.hours = 12;
+    public void makeCycleForShoppingListCreation(){
+        this.minutes += 40;
+        this.manageTime();
+        this.manageTime();
+    }
+    public void makeCycleForRestaurantCleaning(){
+        this.minutes+= 10;
+        this.hours+=1;
+        this.manageTime();
+    }
+    public void endDayOfWork(){
+        this.hours = 10;
         this.minutes = 0;
     }
     public void printTime(){

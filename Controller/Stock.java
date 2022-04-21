@@ -15,7 +15,7 @@ public class Stock {
     }
 
     public void useStockItem(INGREDIENT_LIST ingredient, int quantityUsed){
-        if (quantityUsed >= 1){
+        if (quantityUsed >= 1 && this.stock.get(ingredient).getNbIngredientsLefts() >= 0){
             this.stock.get(ingredient).setNbIngredientsLefts(this.stock.get(ingredient).getNbIngredientsLefts() - quantityUsed);
         }
         else {

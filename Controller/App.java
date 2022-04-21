@@ -16,11 +16,10 @@ public class App {
          */
 
         /*Stock Creation*/
-        /*Map<INGREDIENT_LIST, Ingredient> stockMap = createStock();
+        Map<INGREDIENT_LIST, Ingredient> stockMap = createStock();
         Stock firstStock = new Stock(stockMap);
         StockManager stockManager = new StockManager();
         stockManager.setDailyStock(firstStock);
-        stockManager.getDailyStock().printStock();*/
 
         /*Menu Creation*/
         List<Meal>foodList = createFoodList();
@@ -43,31 +42,50 @@ public class App {
 
         /*App Manager*/
         while (managerChoice != -1){
-            //Reconstitution des Stocks
+            //Reconstitution des Stocks (working)
+            stockManager.reconstituateDailyStock();
+            stockManager.getDailyStock().printStock();
+            gameInternalClock.makeCycleForStocksReconstitution();
 
-            //Management des employés de la journée
+            //Management des employés de la journée (time is working)
+            /*TODO
+            employeeManagement
+             */
+            gameInternalClock.makeCycleForEmployeeManagement();
+            managerChoice = scanner.nextInt();//pause
 
             //Ouverture restaurant
-            while (gameInternalClock.getHours() <= 23 || (gameInternalClock.getHours() <= 23 && gameInternalClock.getMinutes() !=30)){
+            while (gameInternalClock.getHours() < 23 && gameInternalClock.getHours() >= 11 || (gameInternalClock.getHours() == 23 && gameInternalClock.getMinutes() <=30)){
                 //Horaires de fermetures
-                if (gameInternalClock.getHours() >= 18 || gameInternalClock.getHours() <= 15){
+                if (gameInternalClock.getHours() >= 19 || gameInternalClock.getHours() < 15){
+                    System.out.println("Restaurant ouvert");
                     nbOrderAtTheSameTime = r.nextInt(3);
                     for (int i = 0; i < nbOrderAtTheSameTime; i++){
                         orderManager.generateOrder();
                     }
                 }
+                else{
+                    System.out.println("Restaurant fermé");
+                }
                 gameInternalClock.makeCycleForRestaurantOrder();
                 gameInternalClock.printTime();
+                managerChoice = scanner.nextInt();//pause
             }
             //Nettoyage restaurant
+            gameInternalClock.makeCycleForRestaurantCleaning();
+            gameInternalClock.printTime();
+            managerChoice = scanner.nextInt();//pause
 
-            //Créer la liste de course
+            //Créer la liste de course (working)
+            stockManager.generateShoppingList();
+            gameInternalClock.makeCycleForShoppingListCreation();
 
             //Monitoring
 
-            //Fin journée
-            gameInternalClock.endDay();
 
+            //Fin journée
+            gameInternalClock.endDayOfWork();
+            gameInternalClock.printTime();
             managerChoice = scanner.nextInt();//pause
         }
 
@@ -99,7 +117,6 @@ public class App {
         menu.add(new Meal(4, "Verre d'eau", new INGREDIENT_LIST[]{INGREDIENT_LIST.WATER}, false, 1, MEAL_TYPE.OMNIVOROUS, 0));
         return menu;
     }
-
     public static Map<INGREDIENT_LIST, Ingredient> createStock(){
         Map<INGREDIENT_LIST, Ingredient> stock = new HashMap<INGREDIENT_LIST, Ingredient>();
         INGREDIENT_LIST [] allIngredientName = {INGREDIENT_LIST.SALAD, INGREDIENT_LIST.TOMATO, INGREDIENT_LIST.ONION, INGREDIENT_LIST.MUSHROOM, INGREDIENT_LIST.BURGER_BREAD, INGREDIENT_LIST.STEAK, INGREDIENT_LIST.PIZZA_DOUGH, INGREDIENT_LIST.CHEESE, INGREDIENT_LIST.SAUSAGE, INGREDIENT_LIST.RICE, INGREDIENT_LIST.CHICKEN, INGREDIENT_LIST.PANCAKE, INGREDIENT_LIST.LIMONADE, INGREDIENT_LIST.CIDER, INGREDIENT_LIST.BEER, INGREDIENT_LIST.JUICE, INGREDIENT_LIST.WATER};

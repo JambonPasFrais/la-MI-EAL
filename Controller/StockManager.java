@@ -57,18 +57,24 @@ public class StockManager {
     public void useIngredients(Meal anyTypeMeal){
 
     }
-    /*TODO
-    TESTER les 2 fonctions ci-dessous c:
-     */
     public void generateShoppingList(){
         this.shoppingList = new HashMap<>();
         this.dailyStock.getStock().forEach((key, value) -> {
-            this.shoppingList.put(key, 150 - value.getNbIngredientsLefts());
+            if (key != INGREDIENT_LIST.BEER && key != INGREDIENT_LIST.LIMONADE && key != INGREDIENT_LIST.WATER && key != INGREDIENT_LIST.JUICE && key != INGREDIENT_LIST.CIDER){
+                this.shoppingList.put(key, 150 - value.getNbIngredientsLefts());
+            }
         });
     }
     public void reconstituateDailyStock(){
         this.dailyStock.getStock().forEach((key, value) -> {
-            this.dailyStock.getStock().get(key).setNbIngredientsLefts(this.shoppingList.get(key) + this.dailyStock.getStock().get(key).getNbIngredientsLefts());
+            if (this.shoppingList.containsKey(key)){
+                this.dailyStock.getStock().get(key).setNbIngredientsLefts(this.shoppingList.get(key) + this.dailyStock.getStock().get(key).getNbIngredientsLefts());
+            }
+        });
+    }
+    public void printShoppingList(){
+        this.shoppingList.forEach((key, value)->{
+            System.out.println(key.toString() + " " + this.shoppingList.get(key));
         });
     }
 }
