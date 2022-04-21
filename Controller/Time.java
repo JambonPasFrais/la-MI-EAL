@@ -1,5 +1,7 @@
 import java.util.Random;
-
+/*TODO
+Add randomness in the timings
+ */
 public class Time {
     //0 to 6
     private int day;

@@ -24,6 +24,11 @@ public class Menu {
         this.menuPrice = menuPrice;
         this.name = name;
     }
+
+    public void setFoodMenu(List<Meal> foodMenu) {
+        this.foodMenu = foodMenu;
+    }
+
     void addFoodMenuItem(Meal meal){
         this.foodMenu.add(meal);
     }

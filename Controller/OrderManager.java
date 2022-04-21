@@ -12,17 +12,24 @@ public class OrderManager {
     private Scanner scanner;
     private ClassicMenu classicMenu;
     private HundredYearsMenu hundredYearsMenu;
+    private Stock stock;
     OrderManager(){
         this.dayOrderList = new ArrayList<>();
         this.scanner = new Scanner(System.in);
         this.classicMenu = new ClassicMenu();
         this.hundredYearsMenu = new HundredYearsMenu();
+        this.stock = new Stock();
     }
-    OrderManager(ClassicMenu classicMenu, HundredYearsMenu hundredYearsMenu){
+    OrderManager(ClassicMenu classicMenu, HundredYearsMenu hundredYearsMenu, Stock stock){
         this.dayOrderList = new ArrayList<>();
         this.scanner = new Scanner(System.in);
         this.classicMenu = classicMenu;
         this.hundredYearsMenu = hundredYearsMenu;
+        this.stock = stock;
+    }
+
+    public Stock getStock() {
+        return stock;
     }
     public ClassicMenu getClassicMenu() {
         return classicMenu;
@@ -36,13 +43,24 @@ public class OrderManager {
     public Scanner getScanner() {
         return scanner;
     }
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
     public void setDayOrderList(List<Order> dayOrderList) {
         this.dayOrderList = dayOrderList;
     }
     public void addOrder(Order order){
         this.dayOrderList.add(order);
     }
+    public void setClassicMenu(ClassicMenu classicMenu) {
+        this.classicMenu = classicMenu;
+    }
+    public void setHundredYearsMenu(HundredYearsMenu hundredYearsMenu) {
+        this.hundredYearsMenu = hundredYearsMenu;
+    }
+
     public void generateOrder(){
+
         //Var
         Random r = new Random();
         int choice, max, min = 0, foodMenuSize, drinkMenuSize;
@@ -74,10 +92,29 @@ public class OrderManager {
 
         //Food Menu Choice
         for (int i = 0; i < foodMenuSize; i++){
+            //Menu Update
+            if (currentOrder.getMenuEdition() == MENU_EDITION.CLASSIQUE){
+                this.updateClassicMenu();
+            }
+            else{
+                this.updateHundredYearsMenu();
+            }
+
+            //special case if out of Stocks during an order
+            if (this.classicMenu.getFoodMenu().size() < 1 || this.hundredYearsMenu.getFoodMenu().size() < 1){
+                System.out.println("Rupture de Stock Totale");
+                return;
+            }
+
+            //Guest Choice (random)
             choice = r.nextInt(this.classicMenu.getFoodMenu().size());//0 to size-1 included;
+
             //We have to create a new variable each time otherwise if we modify the classicMenu it will modify every order !! (Object things)
             Meal askedMeal = this.classicMenu.getFoodMenuItem(choice);
             foodOrder.add(askedMeal);
+
+            //Stock update
+            this.stock.updateStockForOneMeal(askedMeal);
         }
         currentOrder.setFoodOrder(foodOrder);
         currentOrder.printOneOrderType(currentOrder.getFoodOrder());
@@ -167,10 +204,34 @@ public class OrderManager {
         System.out.format("Que voulez-vous comme plat(s) ? (-1 pour quitter)\n");
         this.classicMenu.printOneMenuType(this.classicMenu.getFoodMenu());
     }
-
     public void askForDrink(){
         System.out.format("Que voulez-vous comme boisson(s) ? (-1 pour quitter)\n");
         this.classicMenu.printOneMenuType(this.classicMenu.getDrinkMenu());
+    }
+    public void updateClassicMenu(){
+        List<Meal>mealToDeleteTab = new ArrayList<>();
+        for (Meal meal: this.classicMenu.getFoodMenu()) {
+            if (!stock.isMealCookable(meal)) {
+                mealToDeleteTab.add(meal);
+            }
+        }
+        for (Meal mealToDelete: mealToDeleteTab){
+            this.classicMenu.getFoodMenu().remove(mealToDelete);
+        }
+    }
+    public void updateHundredYearsMenu(){
+        List<Meal>mealToDeleteTab = new ArrayList<>();
+        for (Meal meal: this.hundredYearsMenu.getFoodMenu()) {
+            if (!stock.isMealCookable(meal)) {
+                mealToDeleteTab.add(meal);
+            }
+        }
+        System.out.println("Je suis là 1");
+        for (Meal mealToDelete: mealToDeleteTab){
+            System.out.println("Je suis là 2");
+            this.hundredYearsMenu.getFoodMenu().remove(mealToDelete);
+            System.out.println("Je suis là 3");
+        }
     }
 
     public void printOrder(List<Meal>order){
