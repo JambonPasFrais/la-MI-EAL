@@ -33,4 +33,8 @@ public class Person {
     public String getFirstName() {
         return firstName;
     }
+
+    public void printInfo(){
+        System.out.println(this.lastName + " " + this.firstName + ", " + this.age + " ans");
+    }
 }

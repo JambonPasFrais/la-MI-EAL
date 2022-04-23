@@ -1,2 +1,2 @@
-public class Cooker {
+public class Cooker extends Employee{
 }

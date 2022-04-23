@@ -1,2 +1,2 @@
-public class Barman {
+public class Barman extends Employee{
 }

@@ -1,2 +1,3 @@
 public enum JOB_TYPE {
+    COOKER, BARMAN, WAITER, MANAGER;
 }
