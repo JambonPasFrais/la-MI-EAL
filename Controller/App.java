@@ -10,15 +10,6 @@ Rendez la console jolie c:
  */
 public class App {
     public static void main(String[] args){
-        /*System.out.println("Quel écran souhaitez vous afficher?");
-        System.out.println("1- Ecran prise de commande");
-        System.out.println("2- Ecran cuisine");
-        System.out.println("3- Ecran bar");
-        System.out.println("4- Ecran Monitoring");
-        Scanner scanner = new Scanner(System.in);
-        int choixEcran = scanner.nextInt();
-        System.out.println("Vous avez choisi l'écran: " + choixEcran);*/
-
         /*TODO
         Manage orders to interact width stocks & meal preparation
          */
@@ -38,7 +29,6 @@ public class App {
         Time gameInternalClock = new Time();//MON 10:00
 
         /*Manager*/
-        Scanner scanner = new Scanner(System.in);
         int managerChoice = 0;
 
         /*Randomness*/
@@ -49,6 +39,7 @@ public class App {
         int nbOrderAtTheSameTime;
 
         /*App Manager*/
+        /*
         while (managerChoice != -1){
             //Reconstitution des Stocks (working)
             System.out.println("Reconstitution des Stocks & des menus");
@@ -63,9 +54,6 @@ public class App {
 
             //Management des employés de la journée (time is working)
             System.out.println("Management des employés de la journée");
-            /*TODO
-            employeeManagement
-             */
             gameInternalClock.makeCycleForEmployeeManagement();
             managerChoice = scanner.nextInt();//pause
 
@@ -96,9 +84,6 @@ public class App {
 
             //Nettoyage restaurant
             System.out.println("Nettoyage du restaurant");
-            /*TODO
-             Employee to clean restaurant
-             */
             gameInternalClock.makeCycleForRestaurantCleaning();
             gameInternalClock.printTime();
 
@@ -108,9 +93,6 @@ public class App {
             gameInternalClock.makeCycleForShoppingListCreation();
 
             //Monitoring
-            /*TODO
-             STATS over the day and the week
-             */
 
             //Fin journée
             System.out.println("Fin de journée");
@@ -119,6 +101,15 @@ public class App {
             managerChoice = scanner.nextInt();//pause
         }
 
+        */
+        System.out.println("Quel écran souhaitez vous afficher?");
+        System.out.println("1- Ecran prise de commande");
+        System.out.println("2- Ecran cuisine");
+        System.out.println("3- Ecran bar");
+        System.out.println("4- Ecran Monitoring");
+        Scanner scanner = new Scanner(System.in);
+        int choixEcran = scanner.nextInt();
+        System.out.println("Vous avez choisi l'écran: " + choixEcran);
 
     }
     public static List<Meal> createFoodList(){
