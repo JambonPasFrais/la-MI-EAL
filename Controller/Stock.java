@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +12,23 @@ public class Stock {
     }
     Stock(Map<INGREDIENT_LIST, Ingredient>stock){
         this.stock = stock;
+    }
+
+    public  void createStock(){
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader(new File("stock.txt")));
+            String line = "";
+            while ((line = reader.readLine())!= null){
+                INGREDIENT_TYPE ingredient_type = INGREDIENT_TYPE.BOTH;
+                String [] str = line.split(" ");
+                Ingredient ingredient = new Ingredient(ingredient_type, INGREDIENT_LIST.valueOf(str[0]), Integer.parseInt(str[1]));
+                ingredient.setTypeIngredient(ingredient.getIngredientTypeDependingOnIngredientList(INGREDIENT_LIST.valueOf(str[0])));
+                this.stock.put(INGREDIENT_LIST.valueOf(str[0]), ingredient);
+            }
+            reader.close();
+        }catch (Exception e){
+            System.err.println("Error " + e.getMessage());
+        }
     }
 
     public Map<INGREDIENT_LIST, Ingredient> getStock() {

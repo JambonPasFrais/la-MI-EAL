@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 /*TODO
@@ -9,16 +10,14 @@ relire le sujet :)
 Rendez la console jolie c:
  */
 public class App {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         /*TODO
         Manage orders to interact width stocks & meal preparation
          */
 
         /*Stock Creation*/
-        Map<INGREDIENT_LIST, Ingredient> stockMap = createStock();
-        Stock firstStock = new Stock(stockMap);
         StockManager stockManager = new StockManager();
-        stockManager.setDailyStock(firstStock);
+        stockManager.getDailyStock().createStock();
 
         /*Menu Creation*/
         List<Meal>foodList = createFoodList();
@@ -37,71 +36,7 @@ public class App {
         /*Orders*/
         OrderManager orderManager = new OrderManager(classicMenu, hundredYearsMenu, stockManager.getDailyStock());
         int nbOrderAtTheSameTime;
-
-        /*App Manager*/
         /*
-        while (managerChoice != -1){
-            //Reconstitution des Stocks (working)
-            System.out.println("Reconstitution des Stocks & des menus");
-            stockManager.reconstituateDailyStock();
-            stockManager.getDailyStock().printStock();
-            gameInternalClock.makeCycleForStocksReconstitution();
-
-            orderManager.getClassicMenu().setFoodMenu(createFoodList());
-            orderManager.getHundredYearsMenu().setFoodMenu(createFoodList());
-            orderManager.getClassicMenu().printOneMenuType(orderManager.getClassicMenu().getFoodMenu());
-            managerChoice = scanner.nextInt();//pause
-
-            //Management des employés de la journée (time is working)
-            System.out.println("Management des employés de la journée");
-            gameInternalClock.makeCycleForEmployeeManagement();
-            managerChoice = scanner.nextInt();//pause
-
-            //Ouverture restaurant
-            System.out.println("Début d'une journée de travail");
-            while (gameInternalClock.getHours() < 23 && gameInternalClock.getHours() >= 11 || (gameInternalClock.getHours() == 23 && gameInternalClock.getMinutes() <=30)){
-                //Horaires d'ouverture
-                if (gameInternalClock.getHours() >= 19 || gameInternalClock.getHours() < 15){
-                    //System.out.println("Restaurant ouvert");
-                    nbOrderAtTheSameTime = r.nextInt(3);
-                    for (int i = 0; i < nbOrderAtTheSameTime; i++){
-                        if (orderManager.getClassicMenu().getFoodMenu().size() >= 1 &&  orderManager.getHundredYearsMenu().getFoodMenu().size() >= 1){
-                            orderManager.generateOrder();
-                        }
-                    }
-                    orderManager.getStock().printStock();
-                    orderManager.getClassicMenu().printOneMenuType(orderManager.getClassicMenu().getFoodMenu());
-                    orderManager.getHundredYearsMenu().printOneMenuType(orderManager.getHundredYearsMenu().getFoodMenu());
-                }
-                else{
-                    //System.out.println("Restaurant fermé");
-                }
-                gameInternalClock.makeCycleForRestaurantOrder();
-            }
-
-            //Update Global Stocks depending on the orders of the day
-            stockManager.setDailyStock(orderManager.getStock());
-
-            //Nettoyage restaurant
-            System.out.println("Nettoyage du restaurant");
-            gameInternalClock.makeCycleForRestaurantCleaning();
-            gameInternalClock.printTime();
-
-            //Créer la liste de course (working)
-            System.out.println("Création de la liste de course");
-            stockManager.generateShoppingList();
-            gameInternalClock.makeCycleForShoppingListCreation();
-
-            //Monitoring
-
-            //Fin journée
-            System.out.println("Fin de journée");
-            gameInternalClock.endDayOfWork();
-            gameInternalClock.printTime();
-            managerChoice = scanner.nextInt();//pause
-        }
-
-        */
         System.out.println("Quel écran souhaitez vous afficher?");
         System.out.println("1- Ecran prise de commande");
         System.out.println("2- Ecran cuisine");
@@ -110,7 +45,9 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         int choixEcran = scanner.nextInt();
         System.out.println("Vous avez choisi l'écran: " + choixEcran);
-
+        */
+        stockManager.getDailyShoppingList().generateShoppingListFromStock(stockManager.getDailyStock(), 1500);
+        stockManager.getDailyShoppingList().convertShoppingListIntoFile();
     }
     public static List<Meal> createFoodList(){
         List<Meal>menu = new ArrayList<>();

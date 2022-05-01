@@ -34,4 +34,13 @@ public class Ingredient {
     public void setNbIngredientsLefts(int nbIngredientsLefts) {
         this.nbIngredientsLefts = nbIngredientsLefts;
     }
+
+    public INGREDIENT_TYPE getIngredientTypeDependingOnIngredientList(INGREDIENT_LIST ingredientList){
+        if (ingredientList == INGREDIENT_LIST.LIMONADE || ingredientList == INGREDIENT_LIST.CIDER || ingredientList == INGREDIENT_LIST.BEER || ingredientList == INGREDIENT_LIST.JUICE || ingredientList == INGREDIENT_LIST.WATER){
+            return INGREDIENT_TYPE.DRINK;
+        }
+        else {
+            return INGREDIENT_TYPE.FOOD;
+        }
+    }
 }

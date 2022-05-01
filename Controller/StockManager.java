@@ -5,23 +5,17 @@ import java.util.Map;
 
 public class StockManager {
     private Stock dailyStock;
-    private Map<INGREDIENT_LIST, Integer>shoppingList;
+    private ShoppingList dailyShoppingList;
     StockManager(){
         this.dailyStock = new Stock();
-        this.shoppingList = new HashMap<>();
+        this.dailyShoppingList = new ShoppingList();
     }
-
-    public void setDailyStock(Stock dailyStock) {
-        this.dailyStock = dailyStock;
-    }
-
     public Stock getDailyStock() {
         return dailyStock;
     }
-
-    /*TODO
-    returns the list of meals you have to change
-     */
+    public ShoppingList getDailyShoppingList() {
+        return dailyShoppingList;
+    }
     public List<Meal> manageStocks (Order order){
         List<Meal> mealOutOfStocks = new ArrayList<>();
         for (Meal foodMeal : order.getFoodOrder()){
@@ -55,26 +49,18 @@ public class StockManager {
         return true;//Have enough
     }
     public void useIngredients(Meal anyTypeMeal){
+    }
+    public void reconstituateDailyStockFromShoppingList(ShoppingList shoppingList){
+        this.dailyStock.getStock().forEach((key, value) -> {
+            if (shoppingList.getShoppingList().containsKey(key)){
+                this.dailyStock.getStock().get(key).setNbIngredientsLefts(shoppingList.getShoppingList().get(key) + this.dailyStock.getStock().get(key).getNbIngredientsLefts());
+            }
+        });
+    }
+    /*TODO
+    Séquence de scanner pour savoir combien ajouter dans quoi
+     */
+    public void reconstituateDailyStockByHand(){
 
-    }
-    public void generateShoppingList(){
-        this.shoppingList = new HashMap<>();
-        this.dailyStock.getStock().forEach((key, value) -> {
-            if (key != INGREDIENT_LIST.BEER && key != INGREDIENT_LIST.LIMONADE && key != INGREDIENT_LIST.WATER && key != INGREDIENT_LIST.JUICE && key != INGREDIENT_LIST.CIDER){
-                this.shoppingList.put(key, 150 - value.getNbIngredientsLefts());
-            }
-        });
-    }
-    public void reconstituateDailyStock(){
-        this.dailyStock.getStock().forEach((key, value) -> {
-            if (this.shoppingList.containsKey(key)){
-                this.dailyStock.getStock().get(key).setNbIngredientsLefts(this.shoppingList.get(key) + this.dailyStock.getStock().get(key).getNbIngredientsLefts());
-            }
-        });
-    }
-    public void printShoppingList(){
-        this.shoppingList.forEach((key, value)->{
-            System.out.println(key.toString() + " " + this.shoppingList.get(key));
-        });
     }
 }

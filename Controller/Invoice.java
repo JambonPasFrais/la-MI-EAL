@@ -60,7 +60,7 @@ public class Invoice {
     public void createInvoiceFile(int invoiceId) {
         String invoiceFileName = "Invoice_" + invoiceId;
         try{
-            FileWriter invoiceFile = new FileWriter("D:\\" + invoiceFileName + ".txt");
+            FileWriter invoiceFile = new FileWriter(invoiceFileName + ".txt");
             invoiceFile.write(this.details);
             invoiceFile.close();
             System.out.println("Facture prête à être imprimée");
