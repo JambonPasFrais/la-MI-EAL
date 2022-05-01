@@ -33,7 +33,7 @@ public class ShoppingList {
                 System.out.println("Nombre actuel de " + ingredientList + ": " + this.shoppingList.get(ingredientList));
                 System.out.print("Combien en ajouter: ");
                 nbIngredientToAdd = sc.nextInt();
-                this.shoppingList.put(ingredientList, this.shoppingList.get(ingredientList) + nbIngredientToAdd);
+                this.shoppingList.put(ingredientList, nbIngredientToAdd);
             }
         }
         System.out.println("Liste de course finale: ");

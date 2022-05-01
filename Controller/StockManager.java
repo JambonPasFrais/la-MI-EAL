@@ -19,7 +19,7 @@ public class StockManager {
     public List<Meal> manageStocks (Order order){
         List<Meal> mealOutOfStocks = new ArrayList<>();
         for (Meal foodMeal : order.getFoodOrder()){
-            if (this.isCookable(foodMeal)){
+            if (this.isCookableConsideringStock(foodMeal)){
                 for (INGREDIENT_LIST ingredientUsed: foodMeal.getRecipe()){
                     this.dailyStock.useStockItem(ingredientUsed, 1);
                 }
@@ -30,7 +30,7 @@ public class StockManager {
         }
         return mealOutOfStocks;
     }
-    public boolean isCookable(Meal anyTypeMeal){
+    public boolean isCookableConsideringStock(Meal anyTypeMeal){
         //Create a tempStock to manipulate
         Map<INGREDIENT_LIST, Integer> tempStock = new HashMap<>();
         for (INGREDIENT_LIST ingredient:anyTypeMeal.getRecipe()){
@@ -47,20 +47,5 @@ public class StockManager {
             }
         }
         return true;//Have enough
-    }
-    public void useIngredients(Meal anyTypeMeal){
-    }
-    public void reconstituateDailyStockFromShoppingList(ShoppingList shoppingList){
-        this.dailyStock.getStock().forEach((key, value) -> {
-            if (shoppingList.getShoppingList().containsKey(key)){
-                this.dailyStock.getStock().get(key).setNbIngredientsLefts(shoppingList.getShoppingList().get(key) + this.dailyStock.getStock().get(key).getNbIngredientsLefts());
-            }
-        });
-    }
-    /*TODO
-    Séquence de scanner pour savoir combien ajouter dans quoi
-     */
-    public void reconstituateDailyStockByHand(){
-
     }
 }

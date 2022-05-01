@@ -17,7 +17,7 @@ public class App {
 
         /*Stock Creation*/
         StockManager stockManager = new StockManager();
-        stockManager.getDailyStock().createStock();
+        stockManager.getDailyStock().createStockFromFile();
 
         /*Menu Creation*/
         List<Meal>foodList = createFoodList();
@@ -46,8 +46,9 @@ public class App {
         int choixEcran = scanner.nextInt();
         System.out.println("Vous avez choisi l'écran: " + choixEcran);
         */
-        stockManager.getDailyShoppingList().generateShoppingListFromStock(stockManager.getDailyStock(), 1500);
-        stockManager.getDailyShoppingList().convertShoppingListIntoFile();
+        stockManager.getDailyShoppingList().generateShoppingListFromStock(stockManager.getDailyStock(), 2000);
+        stockManager.getDailyStock().reconstituteStockFromShoppingList(stockManager.getDailyShoppingList());
+        stockManager.getDailyStock().convertStockIntoFile();
     }
     public static List<Meal> createFoodList(){
         List<Meal>menu = new ArrayList<>();

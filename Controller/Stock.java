@@ -1,9 +1,9 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Stock {
     private Map<INGREDIENT_LIST, Ingredient> stock;
@@ -14,7 +14,7 @@ public class Stock {
         this.stock = stock;
     }
 
-    public  void createStock(){
+    public  void createStockFromFile(){
         try{
             BufferedReader reader = new BufferedReader(new FileReader(new File("stock.txt")));
             String line = "";
@@ -75,5 +75,44 @@ public class Stock {
             }
         }
         return true;
+    }
+    public void reconstituteStockFromShoppingList(ShoppingList shoppingList){
+        this.stock.forEach((key, value)->{
+            if (shoppingList.getShoppingList().containsKey(key)){
+                this.stock.get(key).setNbIngredientsLefts(shoppingList.getShoppingList().get(key) + this.stock.get(key).getNbIngredientsLefts());
+            }
+        });
+    }
+    public void reconstituteStockByHand(){
+        Scanner sc = new Scanner(System.in);
+        int nbIngredientToAdd = 0;
+        for (INGREDIENT_LIST ingredientList : INGREDIENT_LIST.values()){
+            if (ingredientList != INGREDIENT_LIST.BEER && ingredientList != INGREDIENT_LIST.LIMONADE && ingredientList != INGREDIENT_LIST.WATER && ingredientList != INGREDIENT_LIST.JUICE && ingredientList != INGREDIENT_LIST.CIDER){
+                System.out.println("Nombre actuel de " + ingredientList + ": " + this.stock.get(ingredientList).getNbIngredientsLefts());
+                System.out.print("Combien en ajouter: ");
+                nbIngredientToAdd = sc.nextInt();
+                this.stock.get(ingredientList).setNbIngredientsLefts(this.stock.get(ingredientList).getNbIngredientsLefts() + nbIngredientToAdd);
+            }
+        }
+        System.out.println("Liste de Stock finale: ");
+        this.printStock();
+    }
+    public void convertStockIntoFile(){
+        String stockFileName = "stock";
+        try{
+            FileWriter shoppingListFile = new FileWriter(stockFileName + ".txt");
+            this.stock.forEach((key, value)->{
+                try {
+                    shoppingListFile.write(key.toString() + " " + value.getNbIngredientsLefts() + "\n");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            shoppingListFile.close();
+            System.out.println("Liste des stocks mises à jour dans le fichier");
+        }catch(Exception e){
+            System.out.println("Error on file creation");
+            e.printStackTrace();
+        }
     }
 }
