@@ -8,24 +8,16 @@ créer le restaurant manager
 créer les employés et le employee management
 relire le sujet :)
 Rendez la console jolie c:
+BUG : Sur le isMealCookable ou le stock idk why
  */
 public class App {
     public static void main(String[] args) throws IOException {
-        /*TODO
-        Manage orders to interact width stocks & meal preparation
-         */
-
-        /*Stock Creation*/
-        StockManager stockManager = new StockManager();
-        stockManager.getDailyStock().createStockFromFile();
-
         /*Menu Creation*/
         List<Meal>foodList = createFoodList();
         List<Meal>drinkList = createDrinkList();
-        ClassicMenu classicMenu = new ClassicMenu(foodList, drinkList, true, -1, MENU_EDITION.CLASSIQUE);
-        HundredYearsMenu hundredYearsMenu = new HundredYearsMenu(foodList, drinkList, true, MENU_EDITION.CENT_ANS);
-        /*Time Creation*/
-        Time gameInternalClock = new Time();//MON 10:00
+
+        RestaurantManager restaurantManager = new RestaurantManager(foodList, drinkList);
+        restaurantManager.launchRestaurantApp();
 
         /*Manager*/
         int managerChoice = 0;
@@ -33,22 +25,6 @@ public class App {
         /*Randomness*/
         Random r = new Random();
 
-        /*Orders*/
-        OrderManager orderManager = new OrderManager(classicMenu, hundredYearsMenu, stockManager.getDailyStock());
-        int nbOrderAtTheSameTime;
-        /*
-        System.out.println("Quel écran souhaitez vous afficher?");
-        System.out.println("1- Ecran prise de commande");
-        System.out.println("2- Ecran cuisine");
-        System.out.println("3- Ecran bar");
-        System.out.println("4- Ecran Monitoring");
-        Scanner scanner = new Scanner(System.in);
-        int choixEcran = scanner.nextInt();
-        System.out.println("Vous avez choisi l'écran: " + choixEcran);
-        */
-        stockManager.getDailyShoppingList().generateShoppingListFromStock(stockManager.getDailyStock(), 2000);
-        stockManager.getDailyStock().reconstituteStockFromShoppingList(stockManager.getDailyShoppingList());
-        stockManager.getDailyStock().convertStockIntoFile();
     }
     public static List<Meal> createFoodList(){
         List<Meal>menu = new ArrayList<>();
@@ -75,20 +51,5 @@ public class App {
         menu.add(new Meal(3, "Jus de fruit", new INGREDIENT_LIST[]{INGREDIENT_LIST.JUICE}, false, 1, MEAL_TYPE.OMNIVOROUS, 1));
         menu.add(new Meal(4, "Verre d'eau", new INGREDIENT_LIST[]{INGREDIENT_LIST.WATER}, false, 1, MEAL_TYPE.OMNIVOROUS, 0));
         return menu;
-    }
-    public static Map<INGREDIENT_LIST, Ingredient> createStock(){
-        Map<INGREDIENT_LIST, Ingredient> stock = new HashMap<INGREDIENT_LIST, Ingredient>();
-        INGREDIENT_LIST [] allIngredientName = {INGREDIENT_LIST.SALAD, INGREDIENT_LIST.TOMATO, INGREDIENT_LIST.ONION, INGREDIENT_LIST.MUSHROOM, INGREDIENT_LIST.BURGER_BREAD, INGREDIENT_LIST.STEAK, INGREDIENT_LIST.PIZZA_DOUGH, INGREDIENT_LIST.CHEESE, INGREDIENT_LIST.SAUSAGE, INGREDIENT_LIST.RICE, INGREDIENT_LIST.CHICKEN, INGREDIENT_LIST.PANCAKE, INGREDIENT_LIST.LIMONADE, INGREDIENT_LIST.CIDER, INGREDIENT_LIST.BEER, INGREDIENT_LIST.JUICE, INGREDIENT_LIST.WATER};
-        for (int i = 0; i < allIngredientName.length; i++){
-            Ingredient ingredient;
-            if (allIngredientName[i] == INGREDIENT_LIST.LIMONADE || allIngredientName[i] == INGREDIENT_LIST.CIDER || allIngredientName[i] == INGREDIENT_LIST.BEER || allIngredientName[i] == INGREDIENT_LIST.JUICE || allIngredientName[i] == INGREDIENT_LIST.WATER){
-                ingredient = new Ingredient(INGREDIENT_TYPE.DRINK, allIngredientName[i], -1);
-            }
-            else {
-                ingredient = new Ingredient(INGREDIENT_TYPE.FOOD, allIngredientName[i], 150);
-            }
-            stock.put(allIngredientName[i], ingredient);
-        }
-        return stock;
     }
 }

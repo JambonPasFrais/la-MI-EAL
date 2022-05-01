@@ -1,9 +1,6 @@
 import java.io.*;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Stock {
     private Map<INGREDIENT_LIST, Ingredient> stock;
@@ -64,15 +61,21 @@ public class Stock {
         }
     }
     public boolean isMealCookable(Meal meal){
-        Stock tempStock = new Stock();
-        tempStock.setStock(this.stock);
+        List<INGREDIENT_LIST>ingredientUsed = new ArrayList<>();
         for (INGREDIENT_LIST ingredientUsable:meal.getRecipe()){
-            if (tempStock.getStock().get(ingredientUsable).getNbIngredientsLefts() <= 0){
+            if (this.stock.get(ingredientUsable).getNbIngredientsLefts() <= 0){
+                for (INGREDIENT_LIST ingredientList:ingredientUsed){
+                    this.refillStockItem(ingredientList, 1);
+                }
                 return false;
             }
             else {
-                tempStock.useStockItem(ingredientUsable, 1);
+                this.useStockItem(ingredientUsable, 1);
+                ingredientUsed.add(ingredientUsable);
             }
+        }
+        for (INGREDIENT_LIST ingredientList:ingredientUsed){
+            this.refillStockItem(ingredientList, 1);
         }
         return true;
     }

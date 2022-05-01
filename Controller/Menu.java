@@ -75,4 +75,15 @@ public class Menu {
             i++;
         }
     }
+    public void updateMenuFromStock(Stock stock){
+        List<Meal> mealToDeleteTab = new ArrayList<>();
+        for (Meal meal: this.foodMenu) {
+            if (!stock.isMealCookable(meal)) {
+                mealToDeleteTab.add(meal);
+            }
+        }
+        for (Meal mealToDelete: mealToDeleteTab){
+            this.foodMenu.remove(mealToDelete);
+        }
+    }
 }
