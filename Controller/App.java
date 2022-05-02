@@ -3,12 +3,10 @@ import java.util.*;
 
 /*TODO
 FAIRE DES TESTS !
-essayer de comprendre pourquoi les ingrédients passent à -1
 créer le restaurant manager
 créer les employés et le employee management
 relire le sujet :)
 Rendez la console jolie c:
-BUG : Sur le isMealCookable ou le stock idk why
  */
 public class App {
     public static void main(String[] args) throws IOException {
@@ -16,8 +14,8 @@ public class App {
         List<Meal>foodList = createFoodList();
         List<Meal>drinkList = createDrinkList();
 
-        RestaurantManager restaurantManager = new RestaurantManager(foodList, drinkList);
-        restaurantManager.launchRestaurantApp();
+        //RestaurantManager restaurantManager = new RestaurantManager(foodList, drinkList);
+        //restaurantManager.launchRestaurantApp();
 
         /*Manager*/
         int managerChoice = 0;
@@ -25,6 +23,13 @@ public class App {
         /*Randomness*/
         Random r = new Random();
 
+        EmployeeManager employeeManager = new EmployeeManager();
+        employeeManager.generateAllEmployeeMapFromFolder("Contrats_Employés");
+        employeeManager.getAllEmployee().get(JOB_TYPE.COOKER).get(0).setDayWorked(2);
+        employeeManager.generateDailyEmployeeMap();
+        for(JOB_TYPE job_type : JOB_TYPE.values()){
+            employeeManager.getAllEmployee().get(job_type).get(0).printEmployeeInfo();
+        }
     }
     public static List<Meal> createFoodList(){
         List<Meal>menu = new ArrayList<>();
@@ -38,7 +43,7 @@ public class App {
         menu.add(new Meal(7, "Burger simple", new INGREDIENT_LIST[]{INGREDIENT_LIST.BURGER_BREAD, INGREDIENT_LIST.STEAK}, false, 15, MEAL_TYPE.OMNIVOROUS, 15));
         menu.add(new Meal(8, "Pizza fromage", new INGREDIENT_LIST[]{INGREDIENT_LIST.PIZZA_DOUGH, INGREDIENT_LIST.CHEESE, INGREDIENT_LIST.TOMATO}, false, 25, MEAL_TYPE.VEGETARIAN, 12));
         menu.add(new Meal(9, "Pizza reine", new INGREDIENT_LIST[]{INGREDIENT_LIST.PIZZA_DOUGH, INGREDIENT_LIST.CHEESE, INGREDIENT_LIST.TOMATO, INGREDIENT_LIST.MUSHROOM}, false, 25, MEAL_TYPE.VEGETARIAN, 12));
-        menu.add(new Meal(10, "Pizza chorizo", new INGREDIENT_LIST[]{INGREDIENT_LIST.PIZZA_DOUGH, INGREDIENT_LIST.CHEESE, INGREDIENT_LIST.TOMATO, INGREDIENT_LIST.SAUSAGE}, false, 28, MEAL_TYPE.OMNIVOROUS, 12));
+        menu.add(new Meal(10, "Pizza pepperoni", new INGREDIENT_LIST[]{INGREDIENT_LIST.PIZZA_DOUGH, INGREDIENT_LIST.CHEESE, INGREDIENT_LIST.TOMATO, INGREDIENT_LIST.SAUSAGE}, false, 28, MEAL_TYPE.OMNIVOROUS, 12));
         menu.add(new Meal(11, "Fajitas poulet", new INGREDIENT_LIST[]{INGREDIENT_LIST.PANCAKE, INGREDIENT_LIST.RICE, INGREDIENT_LIST.CHICKEN}, false, 22, MEAL_TYPE.OMNIVOROUS, 11));
         menu.add(new Meal(12, "Fajitas boeuf", new INGREDIENT_LIST[]{INGREDIENT_LIST.PANCAKE, INGREDIENT_LIST.RICE, INGREDIENT_LIST.STEAK}, false, 22, MEAL_TYPE.OMNIVOROUS, 11));
         return menu;

@@ -1,0 +1,4 @@
+Nom Pivette
+Prénom Guillaume
+Job BARMAN
+Salaire 1350

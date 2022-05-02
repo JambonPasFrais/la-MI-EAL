@@ -5,17 +5,20 @@ public class RestaurantManager {
     private StockManager stockManager;
     private MenuManager menuManager;
     private OrderManager orderManager;
+    private EmployeeManager employeeManager;
 
     RestaurantManager(){
         this.stockManager = new StockManager();
         this.menuManager = new MenuManager();
         this.orderManager = new OrderManager();
+        this.employeeManager = new EmployeeManager();
     }
     RestaurantManager(List<Meal> foodList, List<Meal>drinkList){
         this.menuManager = new MenuManager(foodList, drinkList);
         this.stockManager = new StockManager();
         this.stockManager.getDailyStock().createStockFromFile();
         this.orderManager = new OrderManager();
+        this.employeeManager = new EmployeeManager();
     }
     void launchRestaurantApp(){
         while (true){
