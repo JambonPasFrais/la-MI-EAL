@@ -1,7 +1,8 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -74,7 +75,6 @@ public class Employee extends Person{
         System.out.print("Salaire: ");
         this.salary = sc.nextInt();
         System.out.println("Employé créé");
-        this.convertEmployeeInfoIntoFile();
     }
     public void convertEmployeeInfoIntoFile(){
         String employeeFileName = "Fiche_Info_" + this.getLastName() + "_" + this.getFirstName();
@@ -90,5 +90,40 @@ public class Employee extends Person{
     }
     public void printEmployeeInfo(){
         System.out.println("Nom " + this.getLastName() + "\nPrénom " + this.getFirstName() + "\nJob " + this.job.toString() + "\nSalaire " + this.salary + "\nNombre de jour travaillé de suite " + this.dayWorked);
+    }
+    public void makeDrink(Order order){
+        if (this.job == JOB_TYPE.BARMAN){
+            for(Meal drink:order.getDrinkOrder()){
+                drink.setMealReady(true);
+                System.out.println(drink.getName() + " ready");
+            }
+        }
+        else {
+            System.err.println("Ne prends pas le job des autres");
+        }
+    }
+    public void makeMeal(Order order){
+        if (this.job == JOB_TYPE.COOKER){
+            for(Meal food:order.getFoodOrder()){
+                food.setMealReady(true);
+                System.out.println(food.getName() + " ready");
+            }
+        }
+        else {
+            System.err.println("Ne prends pas le job des autres");
+        }
+    }
+    public void removeEmployeeFile(){
+        String path = "Contrats_Employés\\Fiche_Info_" + this.getLastName() + "_" + this.getFirstName() + ".txt";
+        try {
+            Files.delete(Path.of(path));
+        } catch (NoSuchFileException x) {
+            System.err.format("%s:" + " chemin introuvable %n", path);
+        } catch (DirectoryNotEmptyException x) {
+            System.err.format("%s n'est pas vide %n", path);
+        } catch (IOException x) {
+            // problèmes de permission
+            System.err.println(x);
+        }
     }
 }

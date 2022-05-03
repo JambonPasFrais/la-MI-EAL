@@ -99,4 +99,20 @@ public class Order {
         }
         System.out.print("\n");
     }
+    public boolean isOrderReady(){
+        boolean isOrderReadyTemp = true;
+        for(Meal drink: this.drinkOrder){
+            if (!drink.isMealReady()) {
+                isOrderReadyTemp = false;
+                break;
+            }
+        }
+        for(Meal food: this.foodOrder){
+            if(!food.isMealReady()){
+                isOrderReadyTemp = false;
+                break;
+            }
+        }
+        return isOrderReadyTemp;
+    }
 }

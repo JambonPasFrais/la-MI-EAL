@@ -37,6 +37,10 @@ public class Meal {
         return isMealReady;
     }
 
+    public void setMealReady(boolean mealReady) {
+        isMealReady = mealReady;
+    }
+
     public int getId() {
         return id;
     }

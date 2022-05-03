@@ -25,12 +25,12 @@ public class ShoppingList {
             }
         });
     }
-    public void generateShoppingListByHand(){
+    public void generateShoppingListByHand(Stock stock){
         Scanner sc = new Scanner(System.in);
         int nbIngredientToAdd = 0;
         for (INGREDIENT_LIST ingredientList : INGREDIENT_LIST.values()){
             if (ingredientList != INGREDIENT_LIST.BEER && ingredientList != INGREDIENT_LIST.LIMONADE && ingredientList != INGREDIENT_LIST.WATER && ingredientList != INGREDIENT_LIST.JUICE && ingredientList != INGREDIENT_LIST.CIDER){
-                System.out.println("Nombre actuel de " + ingredientList + ": " + this.shoppingList.get(ingredientList));
+                System.out.println("Nombre actuel de " + ingredientList + ": " + stock.getStock().get(ingredientList).getNbIngredientsLefts());
                 System.out.print("Combien en ajouter: ");
                 nbIngredientToAdd = sc.nextInt();
                 this.shoppingList.put(ingredientList, nbIngredientToAdd);

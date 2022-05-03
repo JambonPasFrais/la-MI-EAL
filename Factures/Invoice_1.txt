@@ -1,0 +1,4 @@
+MENU CLASSIQUE
+Plats: Salade César.
+Boissons: 
+Prix: 9€

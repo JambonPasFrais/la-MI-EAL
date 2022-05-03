@@ -1,0 +1,4 @@
+MENU CLASSIQUE
+Plats: Salade César/Salade César/Salade verte/Soupe d'oignon/Soupe de tomate/Burger complet.
+Boissons: Limonade/Cidre doux/Bière sans alcool/Jus de fruit/Verre d'eau/Verre d'eau.
+Prix: 73€

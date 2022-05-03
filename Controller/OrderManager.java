@@ -44,7 +44,7 @@ public class OrderManager {
             hundredYearsMenu.updateMenuFromStock(stock);
             this.askForFood(classicMenu);
             choice = this.scanner.nextInt();
-            if (choice != -1){
+            if (choice > 0 && choice <= classicMenu.getFoodMenu().size()){
                 Meal askedMeal = classicMenu.getFoodMenuItem(choice - 1);
                 foodOrder.add(askedMeal);
                 stock.updateStockForOneMeal(askedMeal);
@@ -61,7 +61,7 @@ public class OrderManager {
         do {
             this.askForDrink(classicMenu);
             choice = this.scanner.nextInt();
-            if (choice != -1){
+            if (choice > 0 && choice <= classicMenu.getDrinkMenu().size()){
                 Meal askedMeal = classicMenu.getDrinkMenuItem(choice - 1);
                 drinkOrder.add(askedMeal);
             }
