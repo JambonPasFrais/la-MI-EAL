@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 /*TODO
@@ -70,6 +69,7 @@ public class OrderManager {
         }while((currentOrder.getMenuEdition() == hundredYearsMenu.getName() &&  drinkOrder.size() < hundredYearsMenu.getMaximumDrinkQuantity()) || (choice != -1 && currentOrder.getMenuEdition() == classicMenu.getName()));
         currentOrder.setDrinkOrder(drinkOrder);
 
+        currentOrder.makeInvoice();
         this.dayOrderList.add(currentOrder);
 
         System.out.print("Merci pour vos choix !\n");

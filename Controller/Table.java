@@ -1,34 +1,40 @@
 import java.util.List;
 
 public class Table {
-    private TABLE_STATUS tableStatus;
-    private boolean isStatusOk;//Signifie "ils ont besoin qu'on fasse qqc par rapport à leur status
     private int id;
-    private Waiter waiterAssigned;
+    private Employee employeeAssigned;
     private Order tableOrder;
-    private List<Person> tableClients;
+    private TABLE_STATUS tableStatus;
+    private int nbSitAvailable;
+    Table(int id, int nbSitAvailable){
+        this.id = id;
+        this.employeeAssigned = new Employee();
+        this.tableOrder = new Order();
+        this.tableStatus = TABLE_STATUS.FREE;
+        this.nbSitAvailable = nbSitAvailable;
+    }
 
     public TABLE_STATUS getTableStatus() {
         return tableStatus;
+    }
+
+    public Employee getEmployeeAssigned() {
+        return employeeAssigned;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setTableOrder(Order tableOrder) {
-        this.tableOrder = tableOrder;
+    public Order getTableOrder() {
+        return tableOrder;
+    }
+
+    public int getNbSitAvailable() {
+        return nbSitAvailable;
     }
 
     public void setTableStatus(TABLE_STATUS tableStatus) {
         this.tableStatus = tableStatus;
-    }
-
-    public void setStatusOk(boolean statusOk) {
-        isStatusOk = statusOk;
-    }
-
-    public boolean isStatusOk() {
-        return isStatusOk;
     }
 }

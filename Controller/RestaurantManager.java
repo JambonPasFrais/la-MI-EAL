@@ -6,6 +6,7 @@ public class RestaurantManager {
     private MenuManager menuManager;
     private OrderManager orderManager;
     private EmployeeManager employeeManager;
+    private TableManager tableManager;
 
     RestaurantManager(){
         this.stockManager = new StockManager();
@@ -13,12 +14,13 @@ public class RestaurantManager {
         this.orderManager = new OrderManager();
         this.employeeManager = new EmployeeManager();
     }
-    RestaurantManager(List<Meal> foodList, List<Meal>drinkList){
+    RestaurantManager(List<Meal> foodList, List<Meal>drinkList, int nbTable, int[]nbSitPerTable){
         this.menuManager = new MenuManager(foodList, drinkList);
         this.stockManager = new StockManager();
         this.stockManager.getDailyStock().createStockFromFile();
         this.orderManager = new OrderManager();
         this.employeeManager = new EmployeeManager();
+        this.tableManager = new TableManager(nbTable, nbSitPerTable);
     }
     void launchRestaurantApp(){
         while (true){
@@ -30,7 +32,11 @@ public class RestaurantManager {
             Scanner scanner = new Scanner(System.in);
             int choixEcran = scanner.nextInt();
             if (choixEcran == 1){
+                //Prendre commande
+                tableManager.accessToTableInterface();
                 orderManager.takeOrderFromTable(menuManager.getClassicMenu(), menuManager.getHundredYearsMenu(), this.stockManager.getDailyStock());
+                //Libérer table
+                tableManager.freeTableInterface();
             }
             else if (choixEcran == 2){
                 this.employeeManager.showCookerInterface(this.orderManager.getDayOrderList());

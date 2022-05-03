@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /*TODO
@@ -10,11 +11,14 @@ Rendez la console jolie c:
  */
 public class App {
     public static void main(String[] args) throws IOException {
+        int nbTable = 5;
+        int[]nbSitPerTable = {4, 4, 5, 6, 3};
+
         /*Menu Creation*/
         List<Meal>foodList = createFoodList();
         List<Meal>drinkList = createDrinkList();
 
-        RestaurantManager restaurantManager = new RestaurantManager(foodList, drinkList);
+        RestaurantManager restaurantManager = new RestaurantManager(foodList, drinkList, nbTable, nbSitPerTable);
         restaurantManager.launchRestaurantApp();
 
         /*Manager*/
