@@ -14,25 +14,14 @@ public class App {
         List<Meal>foodList = createFoodList();
         List<Meal>drinkList = createDrinkList();
 
-        //RestaurantManager restaurantManager = new RestaurantManager(foodList, drinkList);
-        //restaurantManager.launchRestaurantApp();
+        RestaurantManager restaurantManager = new RestaurantManager(foodList, drinkList);
+        restaurantManager.launchRestaurantApp();
 
         /*Manager*/
         int managerChoice = 0;
 
         /*Randomness*/
         Random r = new Random();
-
-        EmployeeManager employeeManager = new EmployeeManager();
-        employeeManager.generateAllEmployeeMapFromFolder("Contrats_Employés");
-        for (int day = 0; day < 3; day++ ){
-            employeeManager.generateDailyEmployeeMap();
-            for(JOB_TYPE job_type : JOB_TYPE.values()){
-                for (int i = 0; i < employeeManager.getAllEmployee().get(job_type).size(); i++){
-                    employeeManager.getAllEmployee().get(job_type).get(i).printEmployeeInfo();
-                }
-            }
-        }
     }
     public static List<Meal> createFoodList(){
         List<Meal>menu = new ArrayList<>();

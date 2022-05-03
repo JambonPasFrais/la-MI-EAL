@@ -33,21 +33,25 @@ public class RestaurantManager {
                 orderManager.takeOrderFromTable(menuManager.getClassicMenu(), menuManager.getHundredYearsMenu(), this.stockManager.getDailyStock());
             }
             else if (choixEcran == 2){
-                for (Order order : orderManager.getDayOrderList()){
-                    order.printOneOrderType(order.getFoodOrder());
-                }
+                this.employeeManager.showCookerInterface(this.orderManager.getDayOrderList());
             }
             else if (choixEcran == 3){
-                menuManager.getClassicMenu().printOneMenuType(menuManager.getClassicMenu().getFoodMenu());
+                this.employeeManager.showBarmanInterface(this.orderManager.getDayOrderList());
             }
             else if (choixEcran == 4){
-                stockManager.getDailyStock().printStock();
+                this.employeeManager.generateAllEmployeeMapFromFolder("Contrats_Employés");
+                this.employeeManager.generateDailyEmployeeMap();
             }
             else {
                 System.out.println("Error");
                 return;
             }
         }
-
     }
 }
+/*TODO
+Choix des tables au début de la prise de commande
+Pouvoir cuisiner
+Pouvoir Faire les boissons
+Les différents choix du manager
+ */

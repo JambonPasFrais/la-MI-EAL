@@ -93,7 +93,6 @@ public class EmployeeManager {
             }
         });
     }
-
     public void printEmployeeFromASpecificJobType(JOB_TYPE job_type, Map<JOB_TYPE, List<Employee>>dailyAvailableEmployee){
         int i = 0;
         System.out.println(job_type + ": ");
@@ -125,5 +124,49 @@ public class EmployeeManager {
                 e.printEmployeeInfo();
             }
         });
+    }
+    public void showCookerInterface(List<Order>globalOrderList){
+        this.printEmployeeFromASpecificJobType(JOB_TYPE.COOKER, getDailyEmployeeMap());
+        this.showOrderToMakeForSpecificOrderType(globalOrderList, "FoOd");
+    }
+    public void showBarmanInterface(List<Order>globalOrderList){
+        this.printEmployeeFromASpecificJobType(JOB_TYPE.BARMAN, getDailyEmployeeMap());
+        this.showOrderToMakeForSpecificOrderType(globalOrderList, "Drink");
+    }
+    public void showOrderToMakeForSpecificOrderType(List<Order>globalOrderList, String foodOrDrink){
+        System.out.println("Voici les commandes à préparer:");
+        if (!globalOrderList.isEmpty()){
+            for (Order order:globalOrderList){
+                if (!order.isServed()){
+                    System.out.print("Commande " + order.getIdOrder() +": ");
+                    if (foodOrDrink.toLowerCase().equals("food")){
+                        for(Meal foodMeal : order.getFoodOrder()){
+                            if(!foodMeal.isMealReady()){
+                                System.out.print(foodMeal.getName() + " ( ");
+                                for (INGREDIENT_LIST ingredientList:foodMeal.getRecipe()){
+                                    System.out.print(ingredientList.toString() + " ");
+                                }
+                                System.out.print(") / ");
+                            }
+                        }
+                    }
+                    else if(foodOrDrink.toLowerCase().equals("drink")){
+                        for(Meal drinkMeal : order.getDrinkOrder()){
+                            if(!drinkMeal.isMealReady()){
+                                System.out.print(drinkMeal.getName() + " / ");
+                            }
+                        }
+                    }
+                    else{
+                        System.err.println("Error on String");
+                        return;
+                    }
+                    System.out.print("\n");
+                }
+            }
+        }
+        else{
+            System.out.println("Aucune");
+        }
     }
 }
