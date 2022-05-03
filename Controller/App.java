@@ -25,10 +25,13 @@ public class App {
 
         EmployeeManager employeeManager = new EmployeeManager();
         employeeManager.generateAllEmployeeMapFromFolder("Contrats_Employés");
-        employeeManager.getAllEmployee().get(JOB_TYPE.COOKER).get(0).setDayWorked(2);
-        employeeManager.generateDailyEmployeeMap();
-        for(JOB_TYPE job_type : JOB_TYPE.values()){
-            employeeManager.getAllEmployee().get(job_type).get(0).printEmployeeInfo();
+        for (int day = 0; day < 3; day++ ){
+            employeeManager.generateDailyEmployeeMap();
+            for(JOB_TYPE job_type : JOB_TYPE.values()){
+                for (int i = 0; i < employeeManager.getAllEmployee().get(job_type).size(); i++){
+                    employeeManager.getAllEmployee().get(job_type).get(i).printEmployeeInfo();
+                }
+            }
         }
     }
     public static List<Meal> createFoodList(){

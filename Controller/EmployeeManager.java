@@ -37,17 +37,19 @@ public class EmployeeManager {
         }
     }
     public void generateDailyEmployeeMap(){
+        //Reinitialization
+        this.dailyEmployeeMap = new HashMap<>();
+        for (JOB_TYPE job_type : JOB_TYPE.values()){
+            this.dailyEmployeeMap.put(job_type, new ArrayList<>());
+        }
         Map<JOB_TYPE, List<Employee>> dailyAvailableEmployee = this.makeAvailableEmployeeMap();
 
         Scanner scanner = new Scanner(System.in);
-        int managerChoice = 0;
-        int generateDailyEmployeeListEnd = 0;
         int addSomeoneChoice = 0;
-        int addSomeoneInAJobChoice = 0;
+        int addSomeoneInAJobChoice;
         JOB_TYPE addSomeoneJob = JOB_TYPE.WAITER;
-
         //Traitement
-        while(addSomeoneChoice != 5 || (dailyEmployeeMap.get(JOB_TYPE.MANAGER).size() < 1 && dailyEmployeeMap.get(JOB_TYPE.COOKER).size() < 4 && dailyEmployeeMap.get(JOB_TYPE.BARMAN).size() < 1 && dailyEmployeeMap.get(JOB_TYPE.WAITER).size() < 2)){
+        while(addSomeoneChoice != 5 || dailyEmployeeMap.get(JOB_TYPE.MANAGER).size() < 1 || dailyEmployeeMap.get(JOB_TYPE.COOKER).size() < 4 || dailyEmployeeMap.get(JOB_TYPE.BARMAN).size() < 1 || dailyEmployeeMap.get(JOB_TYPE.WAITER).size() < 2){
 
             //Print dailyEmployees
             System.out.println("Voici la liste des employés du jour : ");
@@ -68,18 +70,10 @@ public class EmployeeManager {
             System.out.println("Souhaitez-vous : \n1: Ajouter un cuisinier\n2: Ajouter un barman\n3: Ajouter un serveur\n4: Ajouter un manager\n5: Terminer la génération des employés du jour");
             addSomeoneChoice = scanner.nextInt();
             switch (addSomeoneChoice) {
-                case 1 -> {
-                    addSomeoneJob = JOB_TYPE.COOKER;
-                }
-                case 2 -> {
-                    addSomeoneJob = JOB_TYPE.BARMAN;
-                }
-                case 3 -> {
-                    addSomeoneJob = JOB_TYPE.WAITER;
-                }
-                case 4 -> {
-                    addSomeoneJob = JOB_TYPE.MANAGER;
-                }
+                case 1 -> addSomeoneJob = JOB_TYPE.COOKER;
+                case 2 -> addSomeoneJob = JOB_TYPE.BARMAN;
+                case 3 -> addSomeoneJob = JOB_TYPE.WAITER;
+                case 4 -> addSomeoneJob = JOB_TYPE.MANAGER;
                 case 5 -> System.out.println("Merci pour vos choix");
             }
             if (addSomeoneChoice != 5){
@@ -90,6 +84,14 @@ public class EmployeeManager {
                 dailyAvailableEmployee.get(addSomeoneJob).remove(dailyAvailableEmployee.get(addSomeoneJob).get(addSomeoneInAJobChoice));
             }
         }
+        //Update Employee day worked
+        AllEmployee.forEach((key, value)->{
+            for (Employee e:value){
+                if (!dailyEmployeeMap.get(key).contains(e)){
+                    e.setDayWorked(0);
+                }
+            }
+        });
     }
 
     public void printEmployeeFromASpecificJobType(JOB_TYPE job_type, Map<JOB_TYPE, List<Employee>>dailyAvailableEmployee){
@@ -117,10 +119,6 @@ public class EmployeeManager {
 
         return availableEmployee;
     }
-    /*TODO
-    Créer la méthode qui remet les jours travaillés d'affilé es autres employés à 0 quand la liste des employés de la journée est fini d'être créée
-    Méthode simple : comparer les employés qui sont dans chaque map et mettre à 0 ce qu'on ne retrouve qu'une fois
-     */
     public void printAllEmployee(){
         this.AllEmployee.forEach((key, value)->{
             for (Employee e: value){
