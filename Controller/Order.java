@@ -3,9 +3,6 @@ import java.util.List;
 
 public class Order {
     private int idOrder;
-    /*TODO
-    Make orderType
-     */
     private INGREDIENT_TYPE orderType;
     private List<Meal>foodOrder;
     private List<Meal>drinkOrder;

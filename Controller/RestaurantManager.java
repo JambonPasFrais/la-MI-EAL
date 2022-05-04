@@ -9,14 +9,7 @@ public class RestaurantManager {
     private OrderManager orderManager;
     private EmployeeManager employeeManager;
     private TableManager tableManager;
-
-    RestaurantManager(){
-        this.stockManager = new StockManager();
-        this.menuManager = new MenuManager();
-        this.orderManager = new OrderManager();
-        this.employeeManager = new EmployeeManager();
-        this.employeeManager.generateAllEmployeeMapFromFolder("Contrats_Employés");
-    }
+    private StatsManager statsManager;
     RestaurantManager(List<Meal> foodList, List<Meal>drinkList, int nbTable, int[]nbSitPerTable){
         this.menuManager = new MenuManager(foodList, drinkList);
         this.stockManager = new StockManager();
@@ -25,6 +18,7 @@ public class RestaurantManager {
         this.employeeManager = new EmployeeManager();
         this.employeeManager.generateAllEmployeeMapFromFolder("Contrats_Employés");
         this.tableManager = new TableManager(nbTable, nbSitPerTable);
+        this.statsManager = new StatsManager();
     }
     void launchRestaurantApp(){
         while (true){
@@ -67,21 +61,27 @@ public class RestaurantManager {
             case 2 -> orderManager.takeOrderFromTable(menuManager.getClassicMenu(), menuManager.getHundredYearsMenu(), this.stockManager.getDailyStock());
             case 3 -> employeeManager.showJobInterface(this.orderManager.getDayOrderList(), JOB_TYPE.WAITER);
             case 4 -> tableManager.freeTableInterface();
+            default -> System.out.println("Fermeture de l'interface serveur");
+        }
+        if (choixInterface == 1 || choixInterface == 2 || choixInterface == 3 || choixInterface == 4){
+            this.statsManager.addActionsDoneForSpecificJob(JOB_TYPE.WAITER);
         }
     }
     void showCookerInterface(){
         employeeManager.showJobInterface(this.orderManager.getDayOrderList(), JOB_TYPE.COOKER);
+        this.statsManager.addActionsDoneForSpecificJob(JOB_TYPE.COOKER);
     }
     void showBarmanInterface(){
         employeeManager.showJobInterface(this.orderManager.getDayOrderList(), JOB_TYPE.BARMAN);
+        this.statsManager.addActionsDoneForSpecificJob(JOB_TYPE.BARMAN);
     }
     void showManagerInterface(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Que souhaitez-vous faire ?");
         System.out.println("1- Générer la liste des employés du jour");
-        System.out.println("2- Management des employés");//Stats, Supprimer, Ajouter
-        System.out.println("3- Stocks");//Ajouter à la main, depuis la liste de course, imprimer
-        System.out.println("4- Liste de course");//Imprimer, créer à la main, depuis les stocks
+        System.out.println("2- Management des employés");
+        System.out.println("3- Stocks");
+        System.out.println("4- Liste de course");
         int choixInterface = scanner.nextInt();
         switch (choixInterface){
             case 1 -> {
@@ -97,7 +97,7 @@ public class RestaurantManager {
                     choixInterfaceEmployeeManagement = scanner.nextInt();
                     switch (choixInterfaceEmployeeManagement){
                         case 1 -> {
-                            System.out.println("Ceci est une page de Stats");
+                            this.statsManager.showStatsInterface();
                         }
                         case 2 -> {
                             Employee newEmployee = new Employee();
@@ -165,12 +165,9 @@ public class RestaurantManager {
                 }
             }
         }
+        this.statsManager.addActionsDoneForSpecificJob(JOB_TYPE.MANAGER);
     }
 }
 /*TODO
 /!\ scanner -> corriger les outofbounds
-Les Stats :D
-BUG : on peut servir les commandes qu'on ne voit pas :(
-AMELIORATION : affichage de "aucun" lorsqu'aucune commande ne peut être faite ou servie
-AMELIORATION : ajouter un mdp pour le manager
  */

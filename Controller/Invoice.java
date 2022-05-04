@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Invoice {
@@ -26,9 +27,6 @@ public class Invoice {
         return details;
     }
     public void createInvoiceDetails(List<Meal> foodOrder, List<Meal>drinkOrder, MENU_EDITION menuEdition){
-        /*TODO
-        Gérer les 's' ou non
-         */
         this.details = "MENU " + menuEdition;
         this.details += "\nPlats: ";
         for (int i = 0; i < foodOrder.size(); i++){
@@ -58,7 +56,8 @@ public class Invoice {
         this.details += "\nPrix: " + this.amount + "€";
     }
     public void createInvoiceFile(int invoiceId) {
-        String invoiceFileName = "Invoice_" + invoiceId;
+        DateTimeFormatter currentDate = DateTimeFormatter.ofPattern("dd_MM_yyyy");
+        String invoiceFileName = "Invoice_" + invoiceId + "_" + currentDate;
         try{
             FileWriter invoiceFile = new FileWriter("Factures/" + invoiceFileName + ".txt");
             invoiceFile.write(this.details);
