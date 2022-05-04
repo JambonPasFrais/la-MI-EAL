@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 public class Meal {
     private int id;
     private String name;
@@ -20,39 +16,18 @@ public class Meal {
         this.mealType = mealType;
         this.price = price;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public INGREDIENT_LIST[] getRecipe() {
         return recipe;
     }
-
     public double getPrice() {
         return price;
     }
-
     public boolean isMealReady() {
         return isMealReady;
     }
-
     public void setMealReady(boolean mealReady) {
         isMealReady = mealReady;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getTimeToPrepare() {
-        return timeToPrepare;
-    }
-
-    public MEAL_TYPE getMealType() {
-        return mealType;
-    }
-
     public String getName() {
         return name;
     }

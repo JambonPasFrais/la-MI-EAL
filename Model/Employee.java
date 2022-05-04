@@ -3,8 +3,6 @@ import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Employee extends Person{
@@ -16,12 +14,6 @@ public class Employee extends Person{
         super();
         this.job = JOB_TYPE.WAITER;
         this.salary = 1400;
-        this.dayWorked = 0;
-    }
-    Employee(String firstName, String lastName, int age, JOB_TYPE job, int salary){
-        super(firstName, lastName, age);
-        this.job = job;
-        this.salary = salary;
         this.dayWorked = 0;
     }
     public void setJob(JOB_TYPE job) {
@@ -87,9 +79,6 @@ public class Employee extends Person{
             System.out.println("Error on file creation");
             e.printStackTrace();
         }
-    }
-    public void printEmployeeInfo(){
-        System.out.println("Nom " + this.getLastName() + "\nPrénom " + this.getFirstName() + "\nJob " + this.job.toString() + "\nSalaire " + this.salary + "\nNombre de jour travaillé de suite " + this.dayWorked);
     }
     public void makeDrink(Order order){
         if (this.job == JOB_TYPE.BARMAN){

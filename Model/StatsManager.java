@@ -1,7 +1,5 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
-
 public class StatsManager {
     Map<JOB_TYPE, Stats> dailyJobStats;
     StatsManager(){
@@ -9,10 +7,6 @@ public class StatsManager {
         for (JOB_TYPE jobType: JOB_TYPE.values()){
             this.dailyJobStats.put(jobType, new Stats());
         }
-    }
-
-    public Map<JOB_TYPE, Stats> getDailyJobStats() {
-        return dailyJobStats;
     }
     public void addActionsDoneForSpecificJob(JOB_TYPE jobType){
         this.dailyJobStats.get(jobType).setNbOfActionsDone(this.dailyJobStats.get(jobType).getNbOfActionsDone() + 1);

@@ -1,14 +1,6 @@
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
-/*TODO
-FAIRE DES TESTS !
-créer le restaurant manager
-créer les employés et le employee management
-relire le sujet :)
-Rendez la console jolie c:
- */
 public class App {
     public static void main(String[] args) throws IOException {
         int nbTable = 5;
@@ -20,12 +12,6 @@ public class App {
 
         RestaurantManager restaurantManager = new RestaurantManager(foodList, drinkList, nbTable, nbSitPerTable);
         restaurantManager.launchRestaurantApp();
-
-        /*Manager*/
-        int managerChoice = 0;
-
-        /*Randomness*/
-        Random r = new Random();
     }
     public static List<Meal> createFoodList(){
         List<Meal>menu = new ArrayList<>();

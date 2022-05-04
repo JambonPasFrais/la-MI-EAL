@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class Table {
     private int id;
     private Employee employeeAssigned;
@@ -13,27 +11,15 @@ public class Table {
         this.tableStatus = TABLE_STATUS.FREE;
         this.nbSitAvailable = nbSitAvailable;
     }
-
     public TABLE_STATUS getTableStatus() {
         return tableStatus;
     }
-
-    public Employee getEmployeeAssigned() {
-        return employeeAssigned;
-    }
-
     public int getId() {
         return id;
     }
-
-    public Order getTableOrder() {
-        return tableOrder;
-    }
-
     public int getNbSitAvailable() {
         return nbSitAvailable;
     }
-
     public void setTableStatus(TABLE_STATUS tableStatus) {
         this.tableStatus = tableStatus;
     }

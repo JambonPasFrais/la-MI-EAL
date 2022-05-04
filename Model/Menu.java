@@ -1,9 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-Un menu contient une liste de boisson et une liste de plat avec certaines spécificités
- */
 public class Menu {
     private List<Meal> foodMenu;
     private List<Meal> drinkMenu;
@@ -11,8 +8,8 @@ public class Menu {
     private int menuPrice;
     private MENU_EDITION name;
     Menu(){
-      this.foodMenu = new ArrayList<Meal>();
-      this.drinkMenu = new ArrayList<Meal>();
+      this.foodMenu = new ArrayList<>();
+      this.drinkMenu = new ArrayList<>();
       this.isAvailable = false;
       this.menuPrice = -1;//Default
         this.name = MENU_EDITION.CLASSIQUE;
@@ -23,20 +20,6 @@ public class Menu {
         this.isAvailable = isAvailable;
         this.menuPrice = menuPrice;
         this.name = name;
-    }
-
-    public void setFoodMenu(List<Meal> foodMenu) {
-        this.foodMenu = foodMenu;
-    }
-
-    void addFoodMenuItem(Meal meal){
-        this.foodMenu.add(meal);
-    }
-    void addDrinkMenuItem(Meal meal){
-        this.drinkMenu.add(meal);
-    }
-    public void setAvailable(boolean available) {
-        this.isAvailable = available;
     }
     public void setMenuPrice(int menuPrice){
         this.menuPrice = menuPrice;
@@ -53,16 +36,8 @@ public class Menu {
     public List<Meal> getFoodMenu() {
         return foodMenu;
     }
-
     public MENU_EDITION getName() {
         return name;
-    }
-
-    public boolean getIsAvailable(){
-        return this.isAvailable;
-    }
-    public int getMenuPrice() {
-        return menuPrice;
     }
     public void printOneMenuType(List<Meal>menu){
         int i = 1;

@@ -1,5 +1,4 @@
 import java.io.FileWriter;
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -10,19 +9,6 @@ public class Invoice {
         this.amount = 0;
         this.details ="";
     }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
     public String getDetails() {
         return details;
     }
@@ -67,8 +53,5 @@ public class Invoice {
             System.out.println("Error on file creation");
             e.printStackTrace();
         }
-    }
-    public void printInvoice(){
-        System.out.println(this.getDetails());
     }
 }

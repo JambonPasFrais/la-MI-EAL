@@ -1,5 +1,4 @@
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class Stock {
@@ -30,10 +29,6 @@ public class Stock {
 
     public Map<INGREDIENT_LIST, Ingredient> getStock() {
         return stock;
-    }
-
-    public void setStock(Map<INGREDIENT_LIST, Ingredient> stock) {
-        this.stock = stock;
     }
 
     public void useStockItem(INGREDIENT_LIST ingredient, int quantityUsed){

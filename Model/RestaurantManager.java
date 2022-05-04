@@ -1,6 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class RestaurantManager {
@@ -39,8 +40,18 @@ public class RestaurantManager {
                 this.showBarmanInterface();
             }
             else if (choixEcran == 4){
-                this.showManagerInterface();
-
+                Scanner sc = new Scanner(System.in);
+                System.out.print("Entrez le mot de passe: ");
+                //Ask for Manager Password
+                String password = "I Love Java";
+                String passwordTried = sc.nextLine();
+                if (Objects.equals(passwordTried, password)){
+                    System.out.println("Bon mot de passe !");
+                    this.showManagerInterface();
+                }
+                else {
+                    System.out.println("Erreur mauvais mot de passe");
+                }
             }
             else {
                 System.out.println("Bye Bye");
@@ -168,6 +179,3 @@ public class RestaurantManager {
         this.statsManager.addActionsDoneForSpecificJob(JOB_TYPE.MANAGER);
     }
 }
-/*TODO
-/!\ scanner -> corriger les outofbounds
- */

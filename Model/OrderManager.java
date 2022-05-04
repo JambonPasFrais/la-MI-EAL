@@ -2,10 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/*TODO
-* Pour gérer comment savoir si on a encore assez de ressources pour créer tel ou tel plat, à chaque demande d'un plat par un client on va interagir avec les stocks et on saura ainsi en direct si on dispose d'assez d'ingrédients pour satiusfaire sa demande
-* */
-
 public class OrderManager {
     private List<Order>dayOrderList;
     private Scanner scanner;
@@ -15,9 +11,6 @@ public class OrderManager {
     }
     public List<Order> getDayOrderList() {
         return dayOrderList;
-    }
-    public Scanner getScanner() {
-        return scanner;
     }
     public void takeOrderFromTable(ClassicMenu classicMenu, HundredYearsMenu hundredYearsMenu, Stock stock){
         //Création de la commande

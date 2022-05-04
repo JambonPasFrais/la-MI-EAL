@@ -1,3 +1,0 @@
-public enum RESTAURANT_STATUS {
-    OPEN, CLOSED
-}
